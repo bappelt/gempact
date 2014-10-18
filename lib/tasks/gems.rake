@@ -58,12 +58,8 @@ namespace :gems do
     failures = []
 
     gem_names.each_with_index do |gem_name, index|
-      if RubyGem.find_by(name: gem_name).present?
-        puts "Skipping #{gem_name}, already exists"
-        next
-      end
-
-      new_gem = RubyGem.create!(name: gem_name)
+      new_gem = RubyGem.find_by(name: gem_name)
+      new_gem = RubyGem.create!(name: gem_name) unless new_gem.present?
       puts "processing gem #{format_number(index)} of #{format_number(gem_names.count)}: #{gem_name}"
 
       gem_url = "https://rubygems.org/api/v1/gems/#{gem_name}.json"

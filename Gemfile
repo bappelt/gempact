@@ -15,3 +15,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring', group: :development
 
 gem 'neo4j'
+
+group :development do
+  gem 'pry-byebug'
+end

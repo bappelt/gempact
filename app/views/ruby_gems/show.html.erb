@@ -1,0 +1,21 @@
+<dl>
+  <dt>name</dt>
+  <dd><%= @ruby_gem.name %></dd>
+
+  <dt>Dependencies</dt>
+  <dd>
+    <ul>
+      <% @ruby_gem.dependencies.each do |dep| %>
+          <%= link_to(dep.name, ruby_gem_path(dep)) %>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Used By <%= @ruby_gem.dependents.size %> other gems</dt>
+  <dd>
+    <% @ruby_gem.dependents.each do |dep| %>
+        <%= link_to(dep.name, ruby_gem_path(dep)) %>
+    <% end %>
+  </dd>
+
+</dl>

@@ -1,0 +1,17 @@
+<%= form_for(@ruby_gem) do |f| %>
+  <% if @ruby_gem.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ruby_gem.errors.count, "error") %> prohibited this ruby_gem from being saved:</h2>
+
+      <ul>
+      <% @ruby_gem.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

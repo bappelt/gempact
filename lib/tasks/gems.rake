@@ -30,7 +30,6 @@ namespace :gems do
       rescue RestClient::ResourceNotFound => error
         puts "ERROR: Problem GET-ing: #{gem_url} (full trace will appear at the end)"
         failures << error
-        next
       end
 
       gem_spec = JSON.parse(gem_spec_str)

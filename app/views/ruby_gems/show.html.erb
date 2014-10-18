@@ -1,21 +1,25 @@
-<dl>
-  <dt>name</dt>
-  <dd><%= @ruby_gem.name %></dd>
+<nav class="top-bar" role="navigation">
+  <ul class="title-area">
+    <li class="name"><h1><%= link_to 'Gempact', root_path %></h1></li>
+  </ul>
+</nav>
 
-  <dt>Dependencies</dt>
-  <dd>
-    <ul>
-      <% @ruby_gem.dependencies.each do |dep| %>
-          <%= link_to(dep.name, ruby_gem_path(dep.name)) %>
-      <% end %>
-    </ul>
-  </dd>
+<div class="gem panel">
 
-  <dt>Used By <%= @ruby_gem.dependents.size %> other gems</dt>
-  <dd>
-    <% @ruby_gem.dependents.each do |dep| %>
-        <%= link_to(dep.name, ruby_gem_path(dep.name)) %>
+  <h1><strong><%= @ruby_gem.name %></strong></h1>
+  <br/>
+
+  <h4>depends on</h4>
+  <ul class="gems">
+    <% @ruby_gem.dependencies.each do |dep| %>
+      <li><%= link_to(dep.name, ruby_gem_path(dep.name)) %></li>
     <% end %>
-  </dd>
+  </ul>
 
-</dl>
+  <h4>used by <strong><%= @ruby_gem.dependents.size %></strong> other gems</h4>
+  <ul class="gems">
+    <% @ruby_gem.dependents.each do |dep| %>
+      <li><%= link_to(dep.name, ruby_gem_path(dep.name)) %></li>
+    <% end %>
+  </ul>
+</div>

@@ -1,6 +1,6 @@
 class RubyGemsController < ApplicationController
   def index
-    @ruby_gems = RubyGem.take(50)
+    # @ruby_gems = RubyGem.take(50)
   end
 
   def show

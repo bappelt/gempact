@@ -1,18 +1,20 @@
-<h1>Listing ruby_gems</h1>
+<nav class="top-bar" role="navigation">
+  <ul class="title-area">
+    <li class="name"><h1><%= link_to 'Gempact', root_path %></h1></li>
+  </ul>
+</nav>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="4"></th>
-    </tr>
-  </thead>
+<div class="panel">
+  <h1>Top gems today</h1>
+  <br/>
 
-  <tbody>
-    <% @ruby_gems.each do |ruby_gem| %>
-      <tr>
-        <td><%= ruby_gem.name %></td>
-        <td><%= link_to 'View', ruby_gem_path(ruby_gem.name) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <ul class="gems">
+    <li><%= link_to 'activesupport', ruby_gem_path('activesupport') %></li>
+    <li><%= link_to 'foo-bar', ruby_gem_path('activesupport') %></li>
+    <li><%= link_to 'bar-foo', ruby_gem_path('activesupport') %></li>
+    <li><%= link_to 'baz_baz', ruby_gem_path('activesupport') %></li>
+    <li><%= link_to 'qux_bar', ruby_gem_path('activesupport') %></li>
+    <li><%= link_to 'duck-rb', ruby_gem_path('activesupport') %></li>
+  </u>
+</div>
+

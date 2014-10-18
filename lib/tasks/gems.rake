@@ -56,8 +56,9 @@ namespace :gems do
     gem_names.uniq!
 
     failures = []
-
+    start_index = ENV.fetch('start', 0).to_i
     gem_names.each_with_index do |gem_name, index|
+      next if index < start_index
       new_gem = RubyGem.find_by(name: gem_name)
       new_gem = RubyGem.create!(name: gem_name) unless new_gem.present?
       puts "processing gem #{format_number(index)} of #{format_number(gem_names.count)}: #{gem_name}"
@@ -79,7 +80,7 @@ namespace :gems do
         puts "|--- finding dependency #{dependency_name}"
         dependency = RubyGem.find_by(name: dependency_name)
         dependency = RubyGem.create!(name: dependency_name) if dependency.nil?
-        new_gem.dependencies << dependency
+        new_gem.dependencies << dependency unless new_gem.dependencies.include?(dependency)
       end
 
       new_gem.save!

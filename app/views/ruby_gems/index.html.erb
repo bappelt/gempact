@@ -11,14 +11,8 @@
     <% @ruby_gems.each do |ruby_gem| %>
       <tr>
         <td><%= ruby_gem.name %></td>
-        <td><%= link_to 'Show', ruby_gem %></td>
-        <td><%= link_to 'Edit', edit_ruby_gem_path(ruby_gem) %></td>
-        <td><%= link_to 'Destroy', ruby_gem, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'View', ruby_gem_path(ruby_gem.name) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Ruby gem', new_ruby_gem_path %>

@@ -6,7 +6,7 @@
   <dd>
     <ul>
       <% @ruby_gem.dependencies.each do |dep| %>
-          <%= link_to(dep.name, ruby_gem_path(dep)) %>
+          <%= link_to(dep.name, ruby_gem_path(dep.name)) %>
       <% end %>
     </ul>
   </dd>
@@ -14,7 +14,7 @@
   <dt>Used By <%= @ruby_gem.dependents.size %> other gems</dt>
   <dd>
     <% @ruby_gem.dependents.each do |dep| %>
-        <%= link_to(dep.name, ruby_gem_path(dep)) %>
+        <%= link_to(dep.name, ruby_gem_path(dep.name)) %>
     <% end %>
   </dd>
 

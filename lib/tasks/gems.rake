@@ -72,15 +72,21 @@ namespace :gems do
   desc 'This task calculates gem dependency totals'
   task :rank => :environment do
     puts "updating gem counts..."
-    r_gems = RubyGem.query_as(:rg).where('rg.ranked_at is null').limit(1000).pluck(:rg)
-    r_gems.each do |rgem|
-      direct_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1]-(b:RubyGem)").return(:b).to_a.size
-      indirect_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1..]-(b:RubyGem)").return(:b).to_a.size
-      rgem.direct_dependents = direct_count
-      rgem.total_dependents = indirect_count
-      rgem.save!
-      print '.'
-      STDOUT.flush
+    unranked_count = RubyGem.where(ranked_at: nil).count
+    while unranked_count > 0
+      puts "#{unranked_count} unranked gems"
+      r_gems = RubyGem.query_as(:rg).where('rg.ranked_at is null').limit(1000).pluck(:rg)
+      r_gems.each do |rgem|
+        direct_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1]-(b:RubyGem)").return(:b).to_a.size
+        indirect_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1..]-(b:RubyGem)").return(:b).to_a.size
+        rgem.direct_dependents = direct_count
+        rgem.total_dependents = indirect_count
+        rgem.ranked_at = Time.now
+        rgem.save!
+        print '.'
+        STDOUT.flush
+      end
+      unranked_count = RubyGem.where(ranked_at: nil).count
     end
   end
 

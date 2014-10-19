@@ -4,6 +4,7 @@ class RubyGem
   property :name, index: :exact, constraint: :unique
   property :created_at
   property :updated_at
+  property :ranked_at, type: Time
   property :direct_dependents
   property :total_dependents
 

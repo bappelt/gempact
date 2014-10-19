@@ -17,7 +17,10 @@ class RubyGemsController < ApplicationController
   end
 
   def transitive_dependents_count
-    count = RubyGem.count_transitive_dependents(@ruby_gem.name)
+    key = "gems/#{@ruby_gem.name}/transitive_dependents/count"
+    count = Rails.cache.fetch(key) {
+      RubyGem.count_transitive_dependents(@ruby_gem.name)
+    }
     respond_to do |format|
       format.html { render text: number_with_precision(count, delimiter: ',', precision: 0) }
     end

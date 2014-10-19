@@ -28,10 +28,6 @@ class TransitiveDependentsDatatable < Datatable
   def total_count
     key = "gems/#{ruby_gem.name}/transitive_dependents/count"
     Rails.cache.fetch(key) {
-      puts "=============================================="
-      puts "Filling cache for #{key}"
-      puts "=============================================="
-
       RubyGem.count_transitive_dependents(ruby_gem.name)
     }
   end

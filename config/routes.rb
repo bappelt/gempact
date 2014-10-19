@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get 'gems' => 'ruby_gems#index', as: 'ruby_gems'
   get 'gems/:name' => 'ruby_gems#show', as: 'ruby_gem'
+  get 'gems/:name/badge' => 'ruby_gems#badge'
+  get 'gems/:name/badge_home' => 'ruby_gems#badge_home'
 
   get 'gems/:name/dependents/count' => 'ruby_gems#dependents_count',
     as: 'ruby_gem_dependents_count'

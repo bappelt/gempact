@@ -9,6 +9,15 @@ class RubyGemsController < ApplicationController
   def show
   end
 
+  def badge
+    gem = RubyGem.find_by!(name: params[:name])
+    redirect_to "http://img.shields.io/badge/GemPact%20Factor-#{gem.gempact_score}-blue.svg"
+  end
+
+  def badge_home
+    @ruby_gem = RubyGem.find_by!(name: params[:name])
+  end
+
   def dependents_count
     count = @ruby_gem.direct_dependents
     respond_to do |format|

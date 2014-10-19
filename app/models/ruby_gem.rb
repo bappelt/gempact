@@ -1,5 +1,6 @@
 class RubyGem
   include Neo4j::ActiveNode
+  include Rails.application.routes.url_helpers
 
   property :name, index: :exact, constraint: :unique
   property :created_at
@@ -15,6 +16,10 @@ class RubyGem
 
   def gempact_score
     total_dependents
+  end
+
+  def badge_url
+    "#{root_url}gems/#{name}/badge"
   end
 
   def self.count_dependents(parent_gem, search: nil)

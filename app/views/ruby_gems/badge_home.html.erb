@@ -1,0 +1,27 @@
+<nav class="top-bar" role="navigation">
+  <ul class="title-area">
+    <li class="name"><h1><%= link_to 'Gempact', root_path %></h1></li>
+  </ul>
+</nav>
+
+<div class="panel">
+  <h1>What is a GemPact Factor Badge?</h1>
+
+  <p>
+    A GemPact factor badge is a way to let the community know how many other projects are using your gem.
+    Add it to your README on your GitHub repository to inform your visitors.
+  </p>
+
+  <h3>Your Badge</h3>
+  <img src="<%= @ruby_gem.badge_url %>"/>
+
+  <dl>
+    <dt>Badge URL</dt>
+    <dd><%= @ruby_gem.badge_url %></dd>
+
+    <dt>Markdown</dt>
+    <dd>[![GemPact Score](<%= @ruby_gem.badge_url %>)](<%= ruby_gem_url(@ruby_gem.name) %>)</dd>
+
+  </dl>
+
+</div>

@@ -2,9 +2,9 @@
 
   var gem = $('.gem-details').data('gem');
 
-  $('.gem-details .gem-dependencies').DataTable();
+  $('.gem-details #gem-dependencies > table').DataTable();
 
-  $('.gem-details .gem-dependents').DataTable({
+  $('.gem-details #gem-dependents > table').DataTable({
     serverSide: true,
     ajax: '/datatables/gems/:gem/dependents'.replace(':gem', gem),
     columns: [
@@ -18,5 +18,5 @@
     ]
   });
 
-  $('.gem-details .gem-dependents-transitive').DataTable();
+  $('.gem-details #gem-dependents-transitive > table').DataTable();
 }());

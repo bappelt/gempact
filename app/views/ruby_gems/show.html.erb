@@ -8,60 +8,85 @@
   <h1><strong><%= @ruby_gem.name %></strong></h1>
   <br/>
 
-  <div>
-    <h4>
-      depends on <strong><%= @ruby_gem.dependencies.count %></strong> gems
-    </h4>
+  <dl class="accordion" data-accordion>
+    <dd>
+      <a href="#gem-dependencies">
+        <h4 class="left">
+          depends on <strong><%= @ruby_gem.dependencies.count %></strong> gems
+        </h4>
+        <small class="right visible-for-medium-up">Click to expand</small>
+        <div class="clearfix"></div>
+      </a>
+      <div id="gem-dependencies" class="content">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @ruby_gem.dependencies.each do |dep| %>
+              <tr><td><%= link_to(dep.name, ruby_gem_path(dep.name)) %></td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </dd>
+  </dl>
 
-    <table class="gem-dependencies">
-      <thead>
-        <tr>
-          <th>Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @ruby_gem.dependencies.each do |dep| %>
-          <tr><td><%= link_to(dep.name, ruby_gem_path(dep.name)) %></td></tr>
-        <% end %>
-      </tbody>
-    </table>
+  <dl class="accordion" data-accordion>
+    <dd class="accordion-navigation">
+      <a href="#gem-dependents">
+        <h4 class="left">used
+          <span data-tooltip aria-haspopup="true" class="has-tip"
+            title="Other gems that declare an explicit dependency on this gem">
+            <em>directly</em>
+          </span>
+          by <strong class="count"><%= @ruby_gem.dependents.count %></strong> other gems
+        </h4>
+        <small class="right visible-for-medium-up">Click to expand</small>
+        <div class="clearfix"></div>
+      </a>
+      <div id="gem-dependents" class="content">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @ruby_gem.dependents.each do |dep| %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </dd>
+  </dl>
+
+  <dl class="accordion" data-accordion>
+    <dd class="accordion-navigation">
+      <a href="#gem-dependents-transitive">
+        <h4 class="left">used
+          <span data-tooltip aria-haspopup="true" class="has-tip"
+            title="Other gems that use gems that use this gem (or gems that use a gem that uses some gem that uses this gem...)">
+            <em>indirectly</em>
+          </span>
+          by <span class="count"></span> other gems
+        </h4>
+        <small class="right visible-for-medium-up">Click to expand</small>
+        <div class="clearfix"></div>
+      </a>
+      <div id="gem-dependents-transitive" class="content">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </dd>
   </div>
-
-  <h4>used
-    <span data-tooltip aria-haspopup="true" class="has-tip"
-      title="Other gems that call out an explicit dependency on this gem">
-      <em>directly</em>
-    </span>
-    by <strong class="count"><%= @ruby_gem.dependents.count %></strong> other gems
-  </h4>
-
-  <table class="gem-dependents">
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @ruby_gem.dependents.each do |dep| %>
-      <% end %>
-    </tbody>
-  </table>
-
-  <h4>Used
-    <span data-tooltip aria-haspopup="true" class="has-tip"
-      title="Other gems that use other gems that use this gem">
-      <em>indirectly</em>
-    </span>
-    by <span class="count"></span> other gems
-  </h4>
-
-  <table class="gem-dependents-transitive">
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
 </div>

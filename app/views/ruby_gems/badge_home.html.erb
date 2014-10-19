@@ -28,7 +28,13 @@
 
     <dl>
       <dt>Badge URL</dt>
-      <dd><code><%= @ruby_gem.badge_url %></code></dd>
+      <dd>
+        <code><%= @ruby_gem.badge_url %></code>
+        <a href="javascript:void(0)" id="badge-url">
+          <i class="fa fa-clipboard"></i>
+          <small>copy to clipboard</small>
+        </a>
+      </dd>
 
       <dt>
         <br/>
@@ -36,6 +42,10 @@
       </dt>
       <dd>
         <code>[![GemPact Score](<%= @ruby_gem.badge_url %>)](<%= ruby_gem_url(@ruby_gem.name) %>)</code>
+        <a href="javascript:void(0)" id="badge-md">
+          <i class="fa fa-clipboard"></i>
+          <small>copy to clipboard</small>
+        </a>
       </dd>
 
     </dl>

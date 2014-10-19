@@ -14,6 +14,5 @@
  *= require foundation_and_overrides
  *= require dataTables/dataTables.foundation
  *= require dataTables/dataTables.custom
- *= require font-awesome
  *= require_self
  */

@@ -14,8 +14,7 @@ class RubyGem
   MAX_SEARCH_DEPTH = 5
 
   def gempact_score
-    return nil unless direct_dependents && total_dependents
-    ((direct_dependents || 0) + (total_dependents || 0) / 1000).to_i
+    total_dependents
   end
 
   def self.count_dependents(parent_gem, search: nil)

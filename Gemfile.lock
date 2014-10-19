@@ -171,6 +171,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    zeroclipboard-rails (0.1.0)
+      railties (>= 3.1)
     zip (2.0.2)
 
 PLATFORMS
@@ -190,3 +192,4 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   uglifier (>= 1.3.0)
   unicorn
+  zeroclipboard-rails

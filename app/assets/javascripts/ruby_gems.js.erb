@@ -1,76 +1,86 @@
-(function() {
-  var gem = $('.gem-details').data('gem');
+(function () {
+    var gem = $('.gem-details').data('gem');
 
-  var setupDataTables = function() {
-    var nameRenderer = function(name) {
-      var template = '<a href="/gems/:name">:name</a>';
-      return template.replace(/:name/g, name);
+    var setupDataTables = function () {
+        var nameRenderer = function (name) {
+            var template = '<a href="/gems/:name">:name</a>';
+            return template.replace(/:name/g, name);
+        };
+
+        var scoreRenderer = function (score) {
+            return '<strong>' + score + '</score>';
+        };
+
+        var processingContent = 'Loading <%= image_tag "loading-spin.svg" %>';
+
+        $('.gems-home .score-table table').DataTable({
+            serverSide: true,
+            ajax: '/datatables/gems/ranked',
+            columns: [
+                {
+                    data: 'name',
+                    render: nameRenderer
+                },
+                {
+                    data: 'score',
+                    render: scoreRenderer
+                }
+            ]
+        });
+
+        $('.gem-details #gem-dependencies > table').DataTable();
+
+        $('.gem-details #gem-dependents > table').DataTable({
+            serverSide: true,
+            ajax: '/datatables/gems/:gem/dependents'.replace(':gem', gem),
+            columns: [
+                {
+                    data: 'name',
+                    render: nameRenderer
+                }
+            ]
+        });
+
+        $('.gem-details #gem-dependents-transitive > table').DataTable({
+            serverSide: true,
+            ajax: '/datatables/gems/:gem/transitive_dependents'.replace(':gem', gem),
+            processing: true,
+            language: {
+                processing: processingContent
+            },
+            columns: [
+                {
+                    data: 'name',
+                    render: nameRenderer
+                }
+            ]
+        });
     };
 
-    var scoreRenderer = function(score) {
-      return '<strong>' + score + '</score>';
+    var setupCounts = function () {
+        var countDependentsUrl = '/gems/:gem/dependents/count'.replace(':gem', gem);
+        var countTransitiveDependentsUrl = '/gems/:gem/transitive_dependents/count'.replace(':gem', gem);
+        var dependentsCountEl = $('#gem-dependents-count');
+        var transitiveDependentsCountEl = $('#gem-transitive-dependents-count');
+
+        if (dependentsCountEl.length) {
+            $.get(countDependentsUrl).done(function (response) {
+                dependentsCountEl.text(response);
+            });
+        }
+
+        if (transitiveDependentsCountEl.length) {
+            $.get(countTransitiveDependentsUrl).done(function (response) {
+                transitiveDependentsCountEl.text(response);
+            });
+        }
     };
 
-    var processingContent = 'Loading <%= image_tag "loading-spin.svg" %>';
-
-    $('.gems-home .score-table table').DataTable({
-      serverSide: true,
-      ajax: '/datatables/gems/ranked',
-      columns: [{
-        data: 'name',
-        render: nameRenderer
-      }, {
-        data: 'score',
-        render: scoreRenderer
-      }]
+    $(function () {
+        setupCounts();
+        setupDataTables();
+        $(document).ready(function () {
+            var clip = new ZeroClipboard($(".cb-copy"));
+        });
     });
-
-    $('.gem-details #gem-dependencies > table').DataTable();
-
-    $('.gem-details #gem-dependents > table').DataTable({
-      serverSide: true,
-      ajax: '/datatables/gems/:gem/dependents'.replace(':gem', gem),
-      columns: [{
-        data: 'name',
-        render: nameRenderer
-      }]
-    });
-
-    $('.gem-details #gem-dependents-transitive > table').DataTable({
-      serverSide: true,
-      ajax: '/datatables/gems/:gem/transitive_dependents'.replace(':gem', gem),
-      processing: true,
-      language: {
-        processing: processingContent
-      },
-      columns: [{
-        data: 'name',
-        render: nameRenderer
-      }]
-    });
-  };
-
-  var setupCounts = function() {
-    var countDependentsUrl = '/gems/:gem/dependents/count'.replace(':gem', gem);
-    var countTransitiveDependentsUrl = '/gems/:gem/transitive_dependents/count'.replace(':gem', gem);
-    var dependentsCountEl= $('#gem-dependents-count');
-    var transitiveDependentsCountEl = $('#gem-transitive-dependents-count');
-
-    if ( dependentsCountEl.length )  {
-      $.get(countDependentsUrl).done(function(response) {
-        dependentsCountEl.text(response);
-      });
-    }
-
-    if ( transitiveDependentsCountEl.length ) {
-      $.get(countTransitiveDependentsUrl).done(function(response) {
-        transitiveDependentsCountEl.text(response);
-      });
-    }
-  };
-
-  $(function() {
-    setupCounts();
-    setupDataTables();
-  });
 }());

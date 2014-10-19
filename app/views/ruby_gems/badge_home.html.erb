@@ -11,6 +11,7 @@
     <h1>What is a GemPact Factor Badge?</h1>
 
     <br/>
+
     <div class="subheader">
       A GemPact factor badge is a way to let the community know how many other projects are using your gem.
       <br/>
@@ -29,10 +30,11 @@
     <dl>
       <dt>Badge URL</dt>
       <dd>
-        <code><%= @ruby_gem.badge_url %></code>
-        <a href="javascript:void(0)" id="badge-url">
+        <code id="badge-link"><%= @ruby_gem.badge_url %></code>
+        <a href="javascript:void(0)" class="cb-copy" data-clipboard-target='badge-link'>
           <i class="fa fa-clipboard"></i>
-          <small>copy to clipboard</small>
+            <small>copy to clipboard</small>
+
         </a>
       </dd>
 
@@ -41,10 +43,10 @@
         Markdown
       </dt>
       <dd>
-        <code>[![GemPact Score](<%= @ruby_gem.badge_url %>)](<%= ruby_gem_url(@ruby_gem.name) %>)</code>
-        <a href="javascript:void(0)" id="badge-md">
-          <i class="fa fa-clipboard"></i>
-          <small>copy to clipboard</small>
+        <code id="badge-mkdwn">[![GemPact Score](<%= @ruby_gem.badge_url %>)](<%= ruby_gem_url(@ruby_gem.name) %>)</code>
+        <a href="javascript:void(0)" id="badge-md" class="cb-copy" data-clipboard-target='badge-mkdwn'>
+          <i class="fa fa-clipboard"> </i>
+            <small>copy to clipboard</small>
         </a>
       </dd>
 

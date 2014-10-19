@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'gems/:name/transitive_dependents/count' => 'ruby_gems#transitive_dependents_count',
     as: 'ruby_gem_transitive_dependents_count'
 
+  get 'datatables/gems/ranked' => 'datatables#ranked'
+
   get 'datatables/gems/:ruby_gem/dependents' => 'datatables#dependents'
   get 'datatables/gems/:ruby_gem/transitive_dependents' => 'datatables#transitive_dependents'
 end

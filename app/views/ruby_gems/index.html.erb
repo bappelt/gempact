@@ -4,17 +4,23 @@
   </ul>
 </nav>
 
-<div class="panel">
-  <h1>Top gems today</h1>
-  <br/>
+<div class="gems-home panel">
+  <center>
+    <h1>Top gems</h1>
+    <br/>
 
-  <ul class="gems">
-    <li><%= link_to 'activesupport', ruby_gem_path('activesupport') %></li>
-    <li><%= link_to 'foo-bar', ruby_gem_path('activesupport') %></li>
-    <li><%= link_to 'bar-foo', ruby_gem_path('activesupport') %></li>
-    <li><%= link_to 'baz_baz', ruby_gem_path('activesupport') %></li>
-    <li><%= link_to 'qux_bar', ruby_gem_path('activesupport') %></li>
-    <li><%= link_to 'duck-rb', ruby_gem_path('activesupport') %></li>
-  </u>
+    <div class="score-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </center>
 </div>
 

@@ -78,7 +78,7 @@ namespace :gems do
       r_gems = RubyGem.query_as(:rg).where('rg.ranked_at is null').limit(1000).pluck(:rg)
       r_gems.each do |rgem|
         direct_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1]-(b:RubyGem)").return(:b).to_a.size
-        indirect_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1..]-(b:RubyGem)").return(:b).to_a.size
+        indirect_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1..#{RubyGem::MAX_SEARCH_DEPTH}]-(b:RubyGem)").return(:b).to_a.size
         rgem.direct_dependents = direct_count
         rgem.total_dependents = indirect_count
         rgem.ranked_at = Time.now

@@ -51,40 +51,57 @@ namespace :gems do
           retry
         else
           raise e
+        end
       end
+
     end
 
+    puts "\n==============================="
+    puts "Done!\n"
+
+    if failures.any?
+      puts "There were #{failures.count} errors:"
+      puts failures
+    else
+      puts "Success!  There were no errors"
+    end
+
+    puts "==============================="
   end
 
-  puts "\n==============================="
-  puts "Done!\n"
-
-  if failures.any?
-    puts "There were #{failures.count} errors:"
-    puts failures
-  else
-    puts "Success!  There were no errors"
+  desc 'This task calculates gem dependency totals'
+  task :rank => :environment do
+    puts "updating gem counts..."
+    RubyGem.all.each do |rgem|
+      direct_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1]-(b:RubyGem)").return(:b).to_a.size
+      indirect_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1..]-(b:RubyGem)").return(:b).to_a.size
+      rgem.direct_dependents = direct_count
+      rgem.total_dependents = indirect_count
+      rgem.save!
+      print '.'
+      STDOUT.flush
+    end
   end
 
-  puts "==============================="
-end
-
-desc 'This task calculates gem dependency totals'
-task :rank => :environment do
-  puts "updating gem counts..."
-  RubyGem.all.each do |rgem|
-    direct_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1]-(b:RubyGem)").return(:b).to_a.size
-    indirect_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1..]-(b:RubyGem)").return(:b).to_a.size
-    rgem.direct_dependents = direct_count
-    rgem.total_dependents = indirect_count
-    rgem.save!
-    print '.'
-    STDOUT.flush
+  desc 'This task checks for duplicate dependency listings'
+  task :remove_dupes => :environment do
+    puts 'removing duplicate dependencies'
+    RubyGem.all.each do |rgem|
+      deps = rgem.dependencies.to_a.uniq
+      dup_cnt = rgem.dependencies.size - deps.size
+      if dup_cnt > 0
+        puts "removing #{dup_cnt} duplicates from #{rgem.name}"
+        rgem.dependencies = deps
+        rgem.save!
+      else
+        print '.'
+        STDOUT.flush
+      end
+    end
   end
-end
 
-def format_number(number)
-  number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
-end
+  def format_number(number)
+    number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+  end
 
 end

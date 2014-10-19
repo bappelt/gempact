@@ -22,6 +22,7 @@ class RubyGemsController < ApplicationController
   def transitive_dependents_count
     key = "gems/#{@ruby_gem.name}/transitive_dependents/count"
     count = Rails.cache.fetch(key) {
+      Rails.logger.debug "Fetching #{key} from cache"
       RubyGem.count_transitive_dependents(@ruby_gem.name)
     }
     respond_to do |format|

@@ -36,7 +36,7 @@
 
   $(function() {
     var countDependentsUrl = '/gems/:gem/dependents/count'.replace(':gem', gem),
-    countTransitiveDependentsUrl = '/gems/:gem/transitive_dependents/count'.replace(':gem', gem);
+        countTransitiveDependentsUrl = '/gems/:gem/transitive_dependents/count'.replace(':gem', gem);
 
     $.get(countDependentsUrl).done(function(response) {
       $('#gem-dependents-count').text(response);

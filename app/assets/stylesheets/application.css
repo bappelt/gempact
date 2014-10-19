@@ -14,4 +14,5 @@
  *= require_self
  *= require foundation_and_overrides
  *= require dataTables/dataTables.foundation
+ *= require dataTables/dataTables.custom
  */

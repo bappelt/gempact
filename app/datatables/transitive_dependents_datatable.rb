@@ -3,20 +3,9 @@ class TransitiveDependentsDatatable < Datatable
     {
       draw: params[:draw],
       recordsTotal: total_count,
+      recordsFiltered: filtered_count,
       data: data
     }
-  end
-
-  def data
-    RubyGem.find_transitive_dependents(ruby_gem.name,
-                                       search: params[:search][:value],
-                                       limit: per_page,
-                                       offset: page_start)
-    .map do |result|
-      {
-        name: result.dependent.name
-      }
-    end
   end
 
   private
@@ -30,5 +19,21 @@ class TransitiveDependentsDatatable < Datatable
     Rails.cache.fetch(key) {
       RubyGem.count_transitive_dependents(ruby_gem.name)
     }
+  end
+
+  def filtered_count
+    RubyGem.count_transitive_dependents(ruby_gem.name, search: params[:search][:value])
+  end
+
+  def data
+    RubyGem.find_transitive_dependents(ruby_gem.name,
+                                       search: params[:search][:value],
+                                       limit: per_page,
+                                       offset: page_start)
+    .map do |result|
+      {
+        name: result.dependent.name
+      }
+    end
   end
 end

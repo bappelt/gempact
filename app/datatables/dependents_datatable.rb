@@ -2,28 +2,38 @@ class DependentsDatatable < Datatable
   def as_json(options = {})
     {
       draw: params[:draw],
-      recordsTotal: query.count,
-      data: format(filter(query))
+      recordsTotal: total_count,
+      recordsFiltered: filtered_count,
+      data: data
     }
   end
 
-  def query
-    @query ||= RubyGem.find_by(name: params[:ruby_gem]).dependents
+  private
+
+  def ruby_gem
+    @ruby_gem ||= RubyGem.find_by(name: params[:ruby_gem])
   end
 
-  def filter(query)
-    if params[:search][:value].present?
-      regex = Regexp.new(".*#{params[:search][:value]}.*")
-      query = query.where(name: regex)
-    end
-    query.limit(per_page).offset(page_start)
+  def total_count
+    key = "gems/#{ruby_gem.name}/dependents/count"
+    Rails.cache.fetch(key) {
+      RubyGem.count_dependents(ruby_gem.name)
+    }
   end
 
-  def format(query)
-    query.map { |gem|
+  def filtered_count
+    RubyGem.count_dependents(ruby_gem.name, search: params[:search][:value])
+  end
+
+  def data
+    RubyGem.find_dependents(ruby_gem.name,
+      search: params[:search][:value],
+      limit: per_page,
+      offset: page_start
+    ).map do |result|
       {
-        name: gem.name
+        name: result.dependent.name
       }
-    }
+    end
   end
 end

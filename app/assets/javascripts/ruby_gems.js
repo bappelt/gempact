@@ -7,6 +7,8 @@
       return template.replace(/:name/g, name);
     };
 
+    var processingContent = 'Loading <img alt="Loading bars" src="/assets/loading-spin.svg">';
+
     $('.gem-details #gem-dependencies > table').DataTable();
 
     $('.gem-details #gem-dependents > table').DataTable({
@@ -21,6 +23,10 @@
     $('.gem-details #gem-dependents-transitive > table').DataTable({
       serverSide: true,
       ajax: '/datatables/gems/:gem/transitive_dependents'.replace(':gem', gem),
+      processing: true,
+      language: {
+        processing: processingContent
+      },
       columns: [{
         data: 'name',
         render: nameRenderer

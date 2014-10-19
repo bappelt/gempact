@@ -10,7 +10,10 @@ class RubyGemsController < ApplicationController
   end
 
   def dependents_count
-    count = @ruby_gem.dependents.count
+    key = "gems/#{@ruby_gem.name}/dependents/count"
+    count = Rails.cache.fetch(key) {
+      RubyGem.count_dependents(@ruby_gem.name)
+    }
     respond_to do |format|
       format.html { render text: number_with_precision(count, delimiter: ',', precision: 0) }
     end

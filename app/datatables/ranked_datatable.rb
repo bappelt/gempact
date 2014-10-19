@@ -15,11 +15,11 @@ class RankedDatatable < Datatable
   end
 
   def filtered_count
-    Neo4j::Session.query("MATCH (g:RubyGem) #{search_expr} RETURN COUNT(g) AS total_count").first.total_count
+    Neo4j::Session.query("MATCH (gem:RubyGem) #{search_expr} RETURN COUNT(gem) AS total_count").first.total_count
   end
 
   def search_expr
-    params[:search][:value].blank? ? '' : "WHERE dependent.name =~ '.*#{params[:search][:value]}.*' "
+    params[:search][:value].blank? ? '' : "WHERE gem.name =~ '.*#{params[:search][:value]}.*' "
   end
 
   def data

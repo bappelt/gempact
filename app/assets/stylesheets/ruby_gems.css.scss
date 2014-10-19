@@ -2,6 +2,10 @@
   .score-table {
     width: 75%;
   }
+
+  thead th {
+    cursor: default !important;
+  }
 }
 
 .gem-details {

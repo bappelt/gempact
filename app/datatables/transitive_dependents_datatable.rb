@@ -22,7 +22,11 @@ class TransitiveDependentsDatatable < Datatable
   end
 
   def filtered_count
-    RubyGem.count_transitive_dependents(ruby_gem.name, search: params[:search][:value])
+    search = params[:search][:value]
+    key = "gems/#{ruby_gem.name}/transitive_dependents/count/search/#{search}"
+    Rails.cache.fetch(key) {
+      RubyGem.count_transitive_dependents(ruby_gem.name, search: search)
+    }
   end
 
   def data

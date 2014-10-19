@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require_tree .
+//= require dataTables/jquery.dataTables
+//= require dataTables/dataTables.foundation
+//= require_directory .
 
 $(function(){ $(document).foundation(); });

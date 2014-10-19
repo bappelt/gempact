@@ -4,22 +4,64 @@
   </ul>
 </nav>
 
-<div class="gem panel">
-
+<div data-gem="<%= @ruby_gem.name %>" class="gem-details panel" >
   <h1><strong><%= @ruby_gem.name %></strong></h1>
   <br/>
 
-  <h4>depends on</h4>
-  <ul class="gems">
-    <% @ruby_gem.dependencies.each do |dep| %>
-      <li><%= link_to(dep.name, ruby_gem_path(dep.name)) %></li>
-    <% end %>
-  </ul>
+  <div>
+    <h4>
+      depends on <strong><%= @ruby_gem.dependencies.count %></strong> gems
+    </h4>
 
-  <h4>used by <strong><%= @ruby_gem.dependents.size %></strong> other gems</h4>
-  <ul class="gems">
-    <% @ruby_gem.dependents.each do |dep| %>
-      <li><%= link_to(dep.name, ruby_gem_path(dep.name)) %></li>
-    <% end %>
-  </ul>
+    <table class="gem-dependencies">
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @ruby_gem.dependencies.each do |dep| %>
+          <tr><td><%= link_to(dep.name, ruby_gem_path(dep.name)) %></td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>used
+    <span data-tooltip aria-haspopup="true" class="has-tip"
+      title="Other gems that call out an explicit dependency on this gem">
+      <em>directly</em>
+    </span>
+    by <strong class="count"><%= @ruby_gem.dependents.count %></strong> other gems
+  </h4>
+
+  <table class="gem-dependents">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @ruby_gem.dependents.each do |dep| %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h4>Used
+    <span data-tooltip aria-haspopup="true" class="has-tip"
+      title="Other gems that use other gems that use this gem">
+      <em>indirectly</em>
+    </span>
+    by <span class="count"></span> other gems
+  </h4>
+
+  <table class="gem-dependents-transitive">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </div>

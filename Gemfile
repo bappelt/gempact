@@ -15,6 +15,8 @@ gem 'neo4j'
 
 gem 'foundation-rails'
 
+gem 'zeroclipboard-rails'
+
 group :development do
   gem 'pry-byebug'
 end

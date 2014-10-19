@@ -15,6 +15,7 @@
 //= require foundation
 //= require dataTables/jquery.dataTables
 //= require dataTables/dataTables.foundation
+//= require zeroclipboard
 //= require_directory .
 
 $(function(){ $(document).foundation(); });

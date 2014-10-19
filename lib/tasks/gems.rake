@@ -72,7 +72,8 @@ namespace :gems do
   desc 'This task calculates gem dependency totals'
   task :rank => :environment do
     puts "updating gem counts..."
-    RubyGem.all.each do |rgem|
+    r_gems = RubyGem.query_as(:rg).where('rg.ranked_at is null').limit(1000).pluck(:rg)
+    r_gems.each do |rgem|
       direct_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1]-(b:RubyGem)").return(:b).to_a.size
       indirect_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1..]-(b:RubyGem)").return(:b).to_a.size
       rgem.direct_dependents = direct_count

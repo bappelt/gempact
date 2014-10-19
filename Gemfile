@@ -15,6 +15,8 @@ gem 'neo4j'
 
 gem 'foundation-rails'
 
+gem 'font-awesome-sass'
+
 group :development do
   gem 'pry-byebug'
 end

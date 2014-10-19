@@ -78,12 +78,18 @@ namespace :gems do
       puts "#{unranked_count} unranked gems"
       r_gems = RubyGem.query_as(:rg).where('rg.ranked_at is null').limit(1000).pluck(:rg)
       r_gems.each do |rgem|
-        direct_count = RubyGem.count_dependents(rgem.name)
-        indirect_count = RubyGem.count_transitive_dependents(rgem.name)
-        rgem.direct_dependents = direct_count
-        rgem.total_dependents = indirect_count
-        rgem.ranked_at = Time.now
-        rgem.save!
+        begin
+          direct_count = RubyGem.count_dependents(rgem.name)
+          indirect_count = RubyGem.count_transitive_dependents(rgem.name)
+          rgem.direct_dependents = direct_count
+          rgem.total_dependents = indirect_count
+          rgem.ranked_at = Time.now
+          rgem.save!
+        rescue Neo4j::Server::CypherResponse::ResponseError => e
+          puts $!
+          puts "unable to get indirect count for #{rgem.name}"
+          indirect_count = nil
+        end
         print '.'
         STDOUT.flush
       end

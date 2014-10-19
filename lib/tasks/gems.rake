@@ -78,8 +78,8 @@ namespace :gems do
       puts "#{unranked_count} unranked gems"
       r_gems = RubyGem.query_as(:rg).where('rg.ranked_at is null').limit(1000).pluck(:rg)
       r_gems.each do |rgem|
-        direct_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1]-(b:RubyGem)").return(:b).count
-        indirect_count = RubyGem.where(name: rgem.name).query_as(:r).match("r<-[depends_on*1..#{depth}]-(b:RubyGem)").return(:b).count
+        direct_count = RubyGem.count_dependents(rgem.name)
+        indirect_count = RubyGem.count_transitive_dependents(rgem.name)
         rgem.direct_dependents = direct_count
         rgem.total_dependents = indirect_count
         rgem.ranked_at = Time.now

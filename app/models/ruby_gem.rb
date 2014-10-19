@@ -11,7 +11,7 @@ class RubyGem
   has_many :out, :dependencies, model_class: RubyGem, type: 'depends_on'
   has_many :in, :dependents, model_class: RubyGem, type: 'depends_on'
 
-  MAX_SEARCH_DEPTH = 6
+  MAX_SEARCH_DEPTH = 5
 
   def gempact_score
     return nil unless direct_dependents && total_dependents

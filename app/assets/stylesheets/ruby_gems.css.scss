@@ -1,6 +1,7 @@
 .gem-details {
-  height: 100%;
   margin: 0;
+  border: none;
+  min-height: 600px;
 
   .accordion-navigation > a {
     background-color: #f2f2f2;
@@ -30,13 +31,12 @@
   }
 }
 
-#footer{
+#footer {
   height: 50px;
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
   line-height: 20px;
   color: #aaa;
   text-align: center;
   width: 100%;
+  padding-top: 1em;
+  margin-bottom: 2em;
 }

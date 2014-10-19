@@ -11,7 +11,11 @@ class Datatable
   end
 
   def per_page
-    params[:length].to_i > 0 ? params[:length].to_s : 10
+    if params[:length].to_i > 0
+      [params[:length].to_i, 100].min
+    else
+      10
+    end
   end
 
   def sort_direction

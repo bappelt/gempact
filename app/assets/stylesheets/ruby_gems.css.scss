@@ -1,0 +1,42 @@
+.gem-details {
+  height: 100%;
+  margin: 0;
+
+  .accordion-navigation > a {
+    background-color: #f2f2f2;
+  }
+
+  #gem-dependencies, #gem-dependents, #gem-dependents-transitive {
+    background-color: #f2f2f2;
+
+    table {
+
+      thead {
+        display: none;
+      }
+    }
+  }
+
+  .gem-title {
+    margin-right: 0.5em;
+  }
+
+  .score-description {
+    font-size: 22px;
+
+    .score {
+      font-size: 36px;
+    }
+  }
+}
+
+#footer{
+  height: 50px;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  line-height: 20px;
+  color: #aaa;
+  text-align: center;
+  width: 100%;
+}

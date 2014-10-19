@@ -5,14 +5,23 @@
 </nav>
 
 <div data-gem="<%= @ruby_gem.name %>" class="gem-details panel" >
-  <h1><strong><%= @ruby_gem.name %></strong></h1>
+  <h1 class="gem-title"><strong><%= @ruby_gem.name %></strong></h1>
+
+  <div class="subheader score-description">
+    Gempact score: <strong class="score">
+      <%= format_score @ruby_gem.gempact_score %>
+    </strong>
+  </div>
+
   <br/>
 
   <dl class="accordion" data-accordion>
-    <dd>
+    <dd class="accordion-navigation">
       <a href="#gem-dependencies">
         <h4 class="left">
-          depends on <strong><%= @ruby_gem.dependencies.count %></strong> gems
+          depends on <strong>
+            <%= number_with_precision(@ruby_gem.dependencies.count, delimiter: ',', precision: 0) %>
+          </strong> gems
         </h4>
         <small class="right visible-for-medium-up">Click to expand</small>
         <div class="clearfix"></div>
@@ -42,7 +51,9 @@
             title="Other gems that declare an explicit dependency on this gem">
             <em>directly</em>
           </span>
-          by <strong class="count"><%= @ruby_gem.dependents.count %></strong> other gems
+          by <strong id="gem-dependents-count" class="count">
+            <%= image_tag 'loading-bars.svg' %>
+          </strong> other gems
         </h4>
         <small class="right visible-for-medium-up">Click to expand</small>
         <div class="clearfix"></div>
@@ -55,8 +66,6 @@
             </tr>
           </thead>
           <tbody>
-            <% @ruby_gem.dependents.each do |dep| %>
-            <% end %>
           </tbody>
         </table>
       </div>
@@ -71,7 +80,9 @@
             title="Other gems that use gems that use this gem (or gems that use a gem that uses some gem that uses this gem...)">
             <em>indirectly</em>
           </span>
-          by <span class="count"></span> other gems
+          by <strong id="gem-transitive-dependents-count" class="count">
+            <%= image_tag 'loading-bars.svg' %>
+          </strong> other gems
         </h4>
         <small class="right visible-for-medium-up">Click to expand</small>
         <div class="clearfix"></div>

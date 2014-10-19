@@ -7,7 +7,7 @@
       return template.replace(/:name/g, name);
     };
 
-    var processingContent = 'Loading <img alt="Loading bars" src="/assets/loading-spin.svg">';
+    var processingContent = 'Loading <%= image_tag 'loading-spin.svg' %>';
 
     $('.gem-details #gem-dependencies > table').DataTable();
 

@@ -4,6 +4,15 @@ require 'rest_client'
 
 namespace :gems do
 
+  desc "Load the gem names into the queue to be imported"
+  task :queue_loading => :environment do
+    compressed = open("http://rubygems.org/specs.4.8.gz")
+    inflated = Zlib::GzipReader.new(compressed).read
+    gem_names = Marshal.load(inflated).collect { |entry| entry[0] }
+    gem_names.uniq!
+    gem_names.each { |gem_name| Resque.enqueue(Importer, gem_name) }
+  end
+
   desc 'This task will load all rubygem data'
   task :load => :environment do
     puts 'Loading gems...'

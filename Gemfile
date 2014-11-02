@@ -18,9 +18,11 @@ gem 'foundation-rails'
 
 gem 'zeroclipboard-rails'
 
-group :development do
+group :development, :test do
   gem 'pry-byebug'
+  gem 'webmock', require: false
 end
+
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'

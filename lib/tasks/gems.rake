@@ -5,12 +5,14 @@ require 'rest_client'
 namespace :gems do
 
   desc "Load the gem names into the queue to be imported"
-  task :queue_loading => :environment do
+  task :queue_loading, [:limit] => :environment do |t, args|
     compressed = open("http://rubygems.org/specs.4.8.gz")
     inflated = Zlib::GzipReader.new(compressed).read
     gem_names = Marshal.load(inflated).collect { |entry| entry[0] }
     gem_names.uniq!
+    gem_names = gem_names[0..args.limit.to_i-1] if args.limit
     gem_names.each { |gem_name| Resque.enqueue(Importer, gem_name) }
+    puts "enqueued #{gem_names.size} gems"
   end
 
   desc 'This task calculates gem dependency totals'

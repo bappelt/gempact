@@ -82,13 +82,14 @@ class RubyGem
       gem_spec = JSON.parse(gem_spec_str)
       dependencies = gem_spec['dependencies']['runtime']
       dependency_gem_names = dependencies.collect { |gem| gem['name'] }
+      dependency_list = []
       dependency_gem_names.each do |dependency_name|
         puts "|--- finding dependency #{dependency_name}"
         dependency = RubyGem.find_by(name: dependency_name)
         dependency = RubyGem.create!(name: dependency_name) if dependency.nil?
-        new_gem.dependencies << dependency unless new_gem.dependencies.include?(dependency)
+        dependency_list << dependency
       end
-
+      new_gem.dependencies = dependency_list
       new_gem.save!
     rescue StandardError => e
       puts $!

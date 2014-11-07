@@ -3,22 +3,18 @@ require 'test_helper'
 class RubyGemTest < ActiveSupport::TestCase
 
   def setup
-   Neo4j::Session.query(  %Q{
+    Neo4j::Session.query(%Q{
                               MATCH (n)
                               OPTIONAL MATCH (n)-[r]-()
                               DELETE n,r
                             }
-                        )
+    )
   end
 
 
   def test_pull_spec_and_create
 
-    data = File.open('test/data/actionview.json').read
-
-    stub_request(:get, "https://rubygems.org/api/v1/gems/actionview.json").
-      with(:headers => {'Accept'=>'*/*; q=0.5, application/xml', 'Accept-Encoding'=>'gzip, deflate', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => data, :headers => {})
+    stub_gemspec_request('actionview')
 
     RubyGem.pull_spec_and_create('actionview')
     assert_equal 4, RubyGem.all.count
@@ -30,5 +26,15 @@ class RubyGemTest < ActiveSupport::TestCase
 
   end
 
+  def test_removed_dependency
+    create_gem_with_dependencies('actionview', %w(activesupport builder erubis))
+
+    stub_gemspec_request('actionview', 'actionview_removed_dep')
+
+    assert_difference("RubyGem.find_by(name: 'actionview').dependencies.size", -1, "should be one less dependency") do
+      RubyGem.pull_spec_and_create('actionview')
+    end
+
+  end
 
 end

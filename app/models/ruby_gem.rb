@@ -27,9 +27,9 @@ class RubyGem
 
     Neo4j::Session.query(
       "MATCH (g:RubyGem { name: '#{parent_gem}' }) " +
-      "<-[:depends_on]-(dependent:RubyGem) " +
-      "#{search_expr} RETURN COUNT(DISTINCT(dependent)) " +
-      "AS total_count").first.total_count
+        "<-[:depends_on]-(dependent:RubyGem) " +
+        "#{search_expr} RETURN COUNT(DISTINCT(dependent)) " +
+        "AS total_count").first.total_count
   end
 
   def self.count_transitive_dependents(parent_gem, search: nil)
@@ -37,9 +37,9 @@ class RubyGem
 
     Neo4j::Session.query(
       "MATCH (g:RubyGem { name: '#{parent_gem}' }) " +
-      "<-[:depends_on*1..#{MAX_SEARCH_DEPTH}]-(dependent:RubyGem) " +
-      "#{search_expr} RETURN COUNT(DISTINCT(dependent)) " +
-      "AS total_count").first.total_count
+        "<-[:depends_on*1..#{MAX_SEARCH_DEPTH}]-(dependent:RubyGem) " +
+        "#{search_expr} RETURN COUNT(DISTINCT(dependent)) " +
+        "AS total_count").first.total_count
   end
 
   def self.find_dependents(ruby_gem, search: nil, offset: 0, limit: 100)
@@ -50,9 +50,9 @@ class RubyGem
 
     Neo4j::Session.query(
       "MATCH (g:RubyGem { name: '#{ruby_gem}'}) " +
-      "<-[:depends_on]-(dependent:RubyGem) " +
-      "#{search_expr} RETURN DISTINCT(dependent) AS dependent " +
-      "SKIP #{safe_offset} LIMIT #{safe_limit}")
+        "<-[:depends_on]-(dependent:RubyGem) " +
+        "#{search_expr} RETURN DISTINCT(dependent) AS dependent " +
+        "SKIP #{safe_offset} LIMIT #{safe_limit}")
   end
 
   def self.find_transitive_dependents(ruby_gem, search: nil, offset: 0, limit: 100)
@@ -63,8 +63,43 @@ class RubyGem
 
     Neo4j::Session.query(
       "MATCH (g:RubyGem { name: '#{ruby_gem}' }) " +
-      "<-[:depends_on*1..#{MAX_SEARCH_DEPTH}]-(dependent:RubyGem) " +
-      "#{search_expr} RETURN DISTINCT(dependent) AS dependent " +
-      "SKIP #{safe_offset} LIMIT #{safe_limit}")
+        "<-[:depends_on*1..#{MAX_SEARCH_DEPTH}]-(dependent:RubyGem) " +
+        "#{search_expr} RETURN DISTINCT(dependent) AS dependent " +
+        "SKIP #{safe_offset} LIMIT #{safe_limit}")
   end
+
+  def self.pull_spec_and_create(gem_name)
+    retries = 3
+    begin
+      new_gem = RubyGem.find_by(name: gem_name)
+      new_gem = RubyGem.create!(name: gem_name) unless new_gem.present?
+      puts "processing gem  #{gem_name}"
+
+      gem_url = "https://rubygems.org/api/v1/gems/#{gem_name}.json"
+
+      gem_spec_str = RestClient.get(gem_url)
+
+      gem_spec = JSON.parse(gem_spec_str)
+      dependencies = gem_spec['dependencies']['runtime']
+      dependency_gem_names = dependencies.collect { |gem| gem['name'] }
+      dependency_gem_names.each do |dependency_name|
+        puts "|--- finding dependency #{dependency_name}"
+        dependency = RubyGem.find_by(name: dependency_name)
+        dependency = RubyGem.create!(name: dependency_name) if dependency.nil?
+        new_gem.dependencies << dependency unless new_gem.dependencies.include?(dependency)
+      end
+
+      new_gem.save!
+    rescue StandardError => e
+      puts $!
+      retries -= 1
+      if retries > 0
+        puts "retrying #{gem_name}"
+        retry
+      else
+        raise e
+      end
+    end
+  end
+
 end

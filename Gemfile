@@ -10,6 +10,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'rest-client'
+gem 'resque', '~> 1.22.0'
 
 gem 'neo4j'
 
@@ -17,9 +18,11 @@ gem 'foundation-rails'
 
 gem 'zeroclipboard-rails'
 
-group :development do
+group :development, :test do
   gem 'pry-byebug'
+  gem 'webmock', require: false
 end
+
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'

@@ -1,0 +1,22 @@
+{"name": "actionview", "downloads": 2468714, "version": "4.1.7", "version_downloads": 23483, "platform": "ruby", "authors": "David Heinemeier Hansson", "info": "Simple, battle-tested conventions and helpers for building web pages.", "licenses": ["MIT"], "project_uri": "http://rubygems.org/gems/actionview", "gem_uri": "http://rubygems.org/gems/actionview-4.1.7.gem", "homepage_uri": "http://www.rubyonrails.org", "wiki_uri": null, "documentation_uri": null, "mailing_list_uri": null, "source_code_uri": null, "bug_tracker_uri": null, "dependencies": {
+    "development": [
+        {
+            "name": "actionpack",
+            "requirements": "= 4.1.7"
+        },
+        {
+            "name": "activemodel",
+            "requirements": "= 4.1.7"
+        }
+    ],
+    "runtime": [
+        {
+            "name": "activesupport",
+            "requirements": "= 4.1.7"
+        },
+        {
+            "name": "builder",
+            "requirements": "~> 3.1"
+        }
+    ]
+}}

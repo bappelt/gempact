@@ -20,9 +20,10 @@ namespace :gems do
     puts "enqueued #{gem_names.size} gems"
   end
 
-  desc 'This task queues ranking of all gems'
-  task :queue_ranking, [:limit] => :environment do |t, args|
-    gem_names = pull_gem_list(args.limit)
+  desc 'This task queues ranking of ALL gems in database'
+  task :queue_ranking => :environment do |t, args|
+    gem_names = Neo4j::Session.query( 'Match(gem) Return gem.name' ).map { |result| result['gem.name'] }
+    puts "queueing #{gem_names.size} for ranking..."
     gem_names.each { |gem_name| Resque.enqueue(Ranker, gem_name) }
   end
 

@@ -80,7 +80,6 @@ class RubyGem
   def self.pull_spec_and_create(gem_name)
     new_gem = RubyGem.find_by(name: gem_name)
     new_gem = RubyGem.create!(name: gem_name) unless new_gem.present?
-    puts "processing gem  #{gem_name}"
 
     gem_url = "https://rubygems.org/api/v1/gems/#{gem_name}.json"
 
@@ -91,7 +90,6 @@ class RubyGem
     dependency_gem_names = dependencies.collect { |gem| gem['name'] }
     dependency_list = []
     dependency_gem_names.each do |dependency_name|
-      puts "|--- finding dependency #{dependency_name}"
       dependency = RubyGem.find_by(name: dependency_name)
       dependency = RubyGem.create!(name: dependency_name) if dependency.nil?
       dependency_list << dependency

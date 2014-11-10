@@ -11,7 +11,8 @@ class RubyGemsController < ApplicationController
 
   def badge
     gem = RubyGem.find_by!(name: params[:name])
-    redirect_to "http://img.shields.io/badge/GemPact%20Factor-#{gem.gempact_score}-blue.svg"
+    formatted_score = number_with_delimiter(gem.gempact_score)
+    redirect_to "http://img.shields.io/badge/GemPact%20Factor-#{formatted_score}-blue.svg"
   end
 
   def badge_home

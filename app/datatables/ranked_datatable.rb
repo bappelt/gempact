@@ -1,4 +1,6 @@
 class RankedDatatable < Datatable
+  include ActionView::Helpers::NumberHelper
+
   def as_json(options = {})
     {
       draw: params[:draw],
@@ -29,7 +31,7 @@ class RankedDatatable < Datatable
     ).map do |result|
       {
         name: result.gem.name,
-        score: result.gem.total_dependents
+        score: number_with_delimiter(result.gem.total_dependents)
       }
     end
   end

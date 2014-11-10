@@ -37,4 +37,18 @@ class RubyGemTest < ActiveSupport::TestCase
 
   end
 
+  def test_rank
+    create_gem_with_dependencies('GGP', [])
+    create_gem_with_dependencies('GP', ['GGP'])
+    create_gem_with_dependencies('P1', ['GP'])
+    create_gem_with_dependencies('P2', ['GP'])
+    create_gem_with_dependencies('C1', ['P1'])
+    create_gem_with_dependencies('B', [])
+
+    ggp = RubyGem.find_by(name: 'GGP')
+    ggp.rank
+    assert_equal 1, ggp.direct_dependents
+    assert_equal 4, ggp.total_dependents
+  end
+
 end

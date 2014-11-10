@@ -68,6 +68,15 @@ class RubyGem
         "SKIP #{safe_offset} LIMIT #{safe_limit}")
   end
 
+  def rank
+    direct_count = RubyGem.count_dependents(name)
+    indirect_count = RubyGem.count_transitive_dependents(name)
+    self.direct_dependents = direct_count
+    self.total_dependents = indirect_count
+    self.ranked_at = Time.now
+    self.save!
+  end
+
   def self.pull_spec_and_create(gem_name)
     retries = 3
     begin

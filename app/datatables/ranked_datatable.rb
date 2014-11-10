@@ -24,8 +24,11 @@ class RankedDatatable < Datatable
 
   def data
     Neo4j::Session.query(
-      "MATCH (gem:RubyGem) #{search_expr} RETURN gem ORDER BY gem.total_dependents DESC " +
-      "SKIP #{page_start} LIMIT #{per_page}"
+      %Q[ MATCH (gem:RubyGem) #{search_expr}
+          WHERE gem.total_dependents IS NOT NULL
+          RETURN gem ORDER BY gem.total_dependents DESC
+          SKIP #{page_start} LIMIT #{per_page}
+        ]
     ).map do |result|
       {
         name: result.gem.name,

@@ -22,6 +22,15 @@ class RubyGem
     "#{root_url}gems/#{name}/badge"
   end
 
+  def self.delete_all
+    Neo4j::Session.query(%Q{
+                              MATCH (n:RubyGem)
+                              OPTIONAL MATCH (n:RubyGem)-[r]-()
+                              DELETE n,r
+                            }
+    )
+  end
+
   def self.count_dependents(parent_gem, search: nil)
     search_expr = search.blank? ? '' : "WHERE dependent.name =~ '.*#{search}.*' "
 

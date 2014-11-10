@@ -19,13 +19,14 @@ class RankedDatatable < Datatable
   end
 
   def search_expr
-    params[:search][:value].blank? ? '' : "WHERE gem.name =~ '.*#{params[:search][:value]}.*' "
+    expr = "WHERE gem.total_dependents IS NOT NULL"
+    expr += " AND gem.name =~ '.*#{params[:search][:value]}.*'" unless params[:search][:value].blank?
+    expr
   end
 
   def data
     Neo4j::Session.query(
       %Q[ MATCH (gem:RubyGem) #{search_expr}
-          WHERE gem.total_dependents IS NOT NULL
           RETURN gem ORDER BY gem.total_dependents DESC
           SKIP #{page_start} LIMIT #{per_page}
         ]

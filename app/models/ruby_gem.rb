@@ -4,6 +4,8 @@ class RubyGem
 
   property :name, index: :exact, constraint: :unique
   property :info
+  property :homepage_uri
+  property :source_code_uri
   property :created_at
   property :updated_at
   property :ranked_at, type: Time
@@ -100,6 +102,8 @@ class RubyGem
     gem_name = gemspec['name']
     new_gem = self.find_or_create_by_name(gem_name)
     new_gem.info = gemspec['info']
+    new_gem.homepage_uri = gemspec['homepage_uri']
+    new_gem.source_code_uri = gemspec['source_code_uri']
     new_gem
   end
 

@@ -67,7 +67,7 @@ test:
         # low amounts for fast failures.
         max_retries: 1
         retry_interval: 0
-staging:
+production:
   sessions:
     default:
       # The standard MongoDB connection URI allows for easy replica set connection setup.

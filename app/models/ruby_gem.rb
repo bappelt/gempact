@@ -77,6 +77,14 @@ class RubyGem
         "SKIP #{safe_offset} LIMIT #{safe_limit}")
   end
 
+  def save_dependent_counts(direct_count:, total_count:)
+    history = GemHistory.find_or_create_by(gem_name: name)
+    history.year = Date.today.year
+    history.direct_dependent_counts << { timestamp: Time.now, count: direct_count }
+    history.total_dependent_counts << { timestamp: Time.now, count: total_count }
+    history.save!
+  end
+
   def rank
     direct_count = RubyGem.count_dependents(name)
     indirect_count = RubyGem.count_transitive_dependents(name)
@@ -84,6 +92,7 @@ class RubyGem
     self.total_dependents = indirect_count
     self.ranked_at = Time.now
     self.save!
+    save_dependent_counts(direct_count: direct_count, total_count: indirect_count)
   end
 
   def self.pull_spec_and_create(gem_name)

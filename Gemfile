@@ -13,6 +13,7 @@ gem 'rest-client'
 gem 'resque', '~> 1.22.0'
 
 gem 'neo4j'
+gem 'mongoid', '~> 4.0.0'
 
 gem 'foundation-rails'
 

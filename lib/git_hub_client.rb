@@ -12,10 +12,10 @@ class GitHubClient
   end
 
   def get_gemfile(full_repo_name)
-    result = @client.search_code("Gemfile NOT lock in:path path:/ repo:#{full_repo_name}").items[0]
-    return '' if result.nil?
-    b64 = result.rels[:self].get.data[:content]
-    Base64.decode64 b64
+    result = @client.contents(full_repo_name,path: 'Gemfile')[:content]
+    Base64.decode64 result
+  rescue Octokit::NotFound
+    return ''
   end
 
   def get_gem_dependencies(full_repo_name)

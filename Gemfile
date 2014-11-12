@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'rest-client'
 gem 'resque', '~> 1.22.0'
+gem "octokit", "~> 3.0"
 
 gem 'neo4j'
 

@@ -44,6 +44,14 @@ namespace :gems do
     end
   end
 
+  desc 'Loads ruby repos'
+  task :queue_gh_repos => :environment do
+    gh_client = GitHubClient.new
+    gh_client.process_ruby_repos do |repo_name|
+      Resque.enqueue(GithubImporter, repo_name)
+    end
+  end
+
   def format_number(number)
     number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
   end

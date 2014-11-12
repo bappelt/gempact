@@ -12,7 +12,7 @@ module Gempact
   class Application < Rails::Application
     config.neo4j.session_type = :server_db
     config.neo4j.session_path = ENV['GRAPHENEDB_URL'] || 'http://localhost:7474'
-
+    config.autoload_paths << Rails.root.join('lib')
     config.cache_store = :memory_store, { size: 64.megabytes }
   end
 end

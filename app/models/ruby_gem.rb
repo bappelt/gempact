@@ -3,6 +3,9 @@ class RubyGem
   include Rails.application.routes.url_helpers
 
   property :name, index: :exact, constraint: :unique
+  property :info
+  property :homepage_uri
+  property :source_code_uri
   property :created_at
   property :updated_at
   property :ranked_at, type: Time
@@ -86,39 +89,40 @@ class RubyGem
     self.save!
   end
 
-  def self.pull_spec_and_create(gem_name)
-    retries = 3
-    begin
-      new_gem = RubyGem.find_by(name: gem_name)
-      new_gem = RubyGem.create!(name: gem_name) unless new_gem.present?
-      puts "processing gem  #{gem_name}"
-
-      gem_url = "https://rubygems.org/api/v1/gems/#{gem_name}.json"
-
-      gem_spec_str = RestClient.get(gem_url)
-
-      gem_spec = JSON.parse(gem_spec_str)
-      dependencies = gem_spec['dependencies']['runtime']
-      dependency_gem_names = dependencies.collect { |gem| gem['name'] }
-      dependency_list = []
-      dependency_gem_names.each do |dependency_name|
-        puts "|--- finding dependency #{dependency_name}"
-        dependency = RubyGem.find_by(name: dependency_name)
-        dependency = RubyGem.create!(name: dependency_name) if dependency.nil?
-        dependency_list << dependency
-      end
-      new_gem.dependencies = dependency_list
-      new_gem.save!
-    rescue StandardError => e
-      puts $!
-      retries -= 1
-      if retries > 0
-        puts "retrying #{gem_name}"
-        retry
-      else
-        raise e
-      end
+  def create_dependencies_from_spec(gem_spec)
+    dependencies = gem_spec['dependencies']['runtime']
+    dependency_gem_names = dependencies.collect { |gem| gem['name'] }
+    dependency_list = []
+    dependency_gem_names.each do |dependency_name|
+      dependency = RubyGem.find_or_create_by_name(dependency_name)
+      dependency_list << dependency
     end
+    self.dependencies = dependency_list
+  end
+
+  def self.find_or_create_by_name(gem_name)
+    new_gem = RubyGem.find_by(name: gem_name)
+    new_gem = RubyGem.create!(name: gem_name) unless new_gem.present?
+    new_gem.save!
+    new_gem
+  end
+
+  def self.create_or_update_from_spec(gemspec)
+    gem_name = gemspec['name']
+    new_gem = self.find_or_create_by_name(gem_name)
+    new_gem.info = gemspec['info']
+    new_gem.homepage_uri = gemspec['homepage_uri']
+    new_gem.source_code_uri = gemspec['source_code_uri']
+    new_gem
+  end
+
+  def self.pull_spec_and_create(gem_name)
+    gem_url = "https://rubygems.org/api/v1/gems/#{gem_name}.json"
+    gem_spec_str = RestClient.get(gem_url)
+    gem_spec = JSON.parse(gem_spec_str)
+    new_gem = RubyGem.create_or_update_from_spec(gem_spec)
+    new_gem.create_dependencies_from_spec(gem_spec)
+    new_gem.save!
   end
 
 end

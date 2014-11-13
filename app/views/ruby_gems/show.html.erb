@@ -8,10 +8,16 @@
   <center>
     <h1 class="gem-title"><strong><%= @ruby_gem.name %></strong></h1>
 
+    <div class="row">
+      <div class="small-5">
+      <p><%= @ruby_gem.info %></p>
+      </div>
+    </div>
+
     <div class="subheader score-description">
-      Gempact score: <strong class="score">
-        <%= format_score @ruby_gem.gempact_score %>
-      </strong>
+      Gempact score: <strong class="score" data-tooltip title="As of: <%= @ruby_gem.ranked_at.to_s(:short) %>">
+      <%= format_score @ruby_gem.gempact_score %>
+    </strong>
     </div>
 
     <br/>
@@ -21,22 +27,25 @@
         <a href="#gem-dependencies">
           <h4>
             depends on <strong>
-              <%= number_with_precision(@ruby_gem.dependencies.count, delimiter: ',', precision: 0) %>
-            </strong> gems
+            <%= number_with_precision(@ruby_gem.dependencies.count, delimiter: ',', precision: 0) %>
+          </strong> gems
           </h4>
           <small class="visible-for-medium-up">Click to expand</small>
         </a>
+
         <div id="gem-dependencies" class="content">
           <table>
             <thead>
-              <tr>
-                <th>Name</th>
-              </tr>
+            <tr>
+              <th>Name</th>
+            </tr>
             </thead>
             <tbody>
-              <% @ruby_gem.dependencies.each do |dep| %>
-                <tr><td><%= link_to(dep.name, ruby_gem_path(dep.name)) %></td></tr>
-              <% end %>
+            <% @ruby_gem.dependencies.each do |dep| %>
+                <tr>
+                  <td><%= link_to(dep.name, ruby_gem_path(dep.name)) %></td>
+                </tr>
+            <% end %>
             </tbody>
           </table>
         </div>
@@ -48,28 +57,29 @@
         <a href="#gem-dependents">
           <h4>used
             <span data-tooltip aria-haspopup="true" class="has-tip"
-              title="Other gems that declare an explicit dependency on this gem">
+                  title="Other gems that declare an explicit dependency on this gem">
               <em>directly</em>
             </span>
             by <strong id="gem-dependents-count" class="count">
-              <%= image_tag 'loading-bars.svg' %>
-            </strong> other gems
+            <%= image_tag 'loading-bars.svg' %>
+          </strong> other gems
           </h4>
           <small class="visible-for-medium-up">Click to expand</small>
         </a>
+
         <div id="gem-dependents" class="content">
           <table>
             <thead>
-              <tr>
-                <th>Name</th>
-              </tr>
+            <tr>
+              <th>Name</th>
+            </tr>
             </thead>
             <tbody>
-              <% 10.times do %>
+            <% 10.times do %>
                 <tr>
                   <td style="height: 36px;"></td>
                 </tr>
-              <% end %>
+            <% end %>
             </tbody>
           </table>
         </div>
@@ -81,28 +91,29 @@
         <a href="#gem-dependents-transitive">
           <h4>used
             <span data-tooltip aria-haspopup="true" class="has-tip"
-              title="Other gems that use gems that use this gem (or gems that use a gem that uses some gem that uses this gem...)">
+                  title="Other gems that use gems that use this gem (or gems that use a gem that uses some gem that uses this gem...)">
               <em>indirectly</em>
             </span>
             by <strong id="gem-transitive-dependents-count" class="count">
-              <%= image_tag 'loading-bars.svg' %>
-            </strong> other gems
+            <%= image_tag 'loading-bars.svg' %>
+          </strong> other gems
           </h4>
           <small class="visible-for-medium-up">Click to expand</small>
         </a>
+
         <div id="gem-dependents-transitive" class="content">
           <table>
             <thead>
-              <tr>
-                <th>Name</th>
-              </tr>
+            <tr>
+              <th>Name</th>
+            </tr>
             </thead>
             <tbody>
-              <% 10.times do %>
+            <% 10.times do %>
                 <tr>
                   <td style="height: 36px;"></td>
                 </tr>
-              <% end %>
+            <% end %>
             </tbody>
           </table>
         </div>
@@ -118,8 +129,8 @@
 
       Is this your gem?
       <%= link_to "#{@ruby_gem.name}/badge_home" do %>
-        Get a badge like this one:
-        <img src="<%= @ruby_gem.badge_url %>"/>
+          Get a badge like this one:
+          <img src="<%= @ruby_gem.badge_url %>"/>
       <% end %>
     </div>
   </center>

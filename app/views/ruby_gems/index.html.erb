@@ -3,33 +3,61 @@
     <li class="name"><h1><%= link_to 'Gempact', root_path %></h1></li>
   </ul>
 </nav>
+<br>
+<div class="row">
 
-<div class="gems-home panel">
-  <center>
-    <h1>Top gems</h1>
-    <br/>
-    <div class="purpose subheader">
-      These are the <span data-tooltip class="has-tip" title="according to rubygems.org">most used gems</span>
-      in the ruby ecosystem, including <span data-tooltip class="has-tip" title="We calculated up to <%= RubyGem::MAX_SEARCH_DEPTH %> levels deep of transitive dependencies.  We couldn't go any further than that because we can't afford the expensive version of neo4j and/or we don't really know what we're doing yet">transitive dependencies.</span>
-      We used a fancy graph database to calculate it, so you know it's acccurate.
+  <div class="small-12 columns small-centered">
 
+    <div class="gems-home panel">
+
+      <h1 class="text-center">Top gems</h1>
+      <br/>
+
+      <div class="purpose subheader">
+        These are the <span data-tooltip class="has-tip" title="according to rubygems.org">most used gems</span>
+        in the ruby ecosystem, including
+        <span data-tooltip class="has-tip" title="We calculated up to <%= RubyGem::MAX_SEARCH_DEPTH %> levels deep of transitive dependencies.  We couldn't go any further than that because we can't afford the expensive version of neo4j and/or we don't really know what we're doing yet">transitive dependencies.</span>
+        We used a fancy graph database to calculate it, so you know it's acccurate.
+
+      </div>
+      <br/>
+
+      <div class="panel">
+        <div class="score-table">
+          <table>
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th width="200" class="text-center">
+                <span class="has-tip" data-tooltip title="Currently, just a total of how many gems depend on this gem, up to <%= RubyGem::MAX_SEARCH_DEPTH %> levels away">Score</span>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          GemPact analyzes relationships within the RubyGem ecosystem and finds which other gems are enabled by a gem.
+          We hope this information is useful to developers wanting to:
+        </p>
+
+        <ul class="circle">
+          <li>
+            Know who is using their gem
+          </li>
+          <li>
+            Find open source examples of a gem in use
+          </li>
+          <li>
+            Evaluate competing gems
+          </li>
+        </ul>
+
+      </div>
     </div>
-    <br/>
+  </div>
 
-    <div class="score-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>
-              <span class="has-tip" data-tooltip title="Currently, just a total of how many gems depend on this gem, up to <%= RubyGem::MAX_SEARCH_DEPTH %> levels away">Score</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-  </center>
 </div>
 

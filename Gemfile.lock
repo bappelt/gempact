@@ -32,6 +32,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
+    bson (2.3.0)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -46,6 +47,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     columnize (0.8.9)
+    connection_pool (2.0.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     debugger-linecache (1.2.0)
@@ -78,6 +80,15 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     minitest (5.4.2)
+    mongoid (4.0.0)
+      activemodel (~> 4.0)
+      moped (~> 2.0.0)
+      origin (~> 2.1)
+      tzinfo (>= 0.3.37)
+    moped (2.0.1)
+      bson (~> 2.2)
+      connection_pool (~> 2.0)
+      optionable (~> 0.2.0)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -100,6 +111,8 @@ GEM
       zip
     net-http-persistent (2.9.4)
     netrc (0.8.0)
+    optionable (0.2.0)
+    origin (2.1.1)
     orm_adapter (0.5.0)
     os (0.9.6)
     polyglot (0.3.5)
@@ -206,6 +219,7 @@ DEPENDENCIES
   foundation-rails
   jbuilder (~> 2.0)
   jquery-rails
+  mongoid (~> 4.0.0)
   neo4j
   pry-byebug
   rails (= 4.1.5)

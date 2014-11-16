@@ -26,6 +26,20 @@ class RubyGemTest < ActiveSupport::TestCase
 
   end
 
+  def test_spec_with_special_chars
+    gem_name = 'activerecord-jdbc-adapter-onsite'
+    another_bad_gem = "ya2yaml"
+    stub_gemspec_request(gem_name)
+    stub_gemspec_request(another_bad_gem)
+    RubyGem.pull_spec_and_create(gem_name)
+    RubyGem.pull_spec_and_create(another_bad_gem)
+    gem = RubyGem.find_by(name: gem_name)
+    another = RubyGem.find_by(name: another_bad_gem)
+    assert gem.info.include? "activerecord-jdbc-adapter is a database adapter for Rails\\'"
+    assert_equal "Ya2YAML is \"yet another to_yaml\". It emits YAML document with complete UTF8 support (string/binary detection, \"\\u\" escape sequences and Unicode specific line breaks).\n", another.info
+  end
+
+
   def test_removed_dependency
     create_gem_with_dependencies('actionview', %w(activesupport builder erubis))
 

@@ -20,9 +20,19 @@ namespace :gems do
     puts "enqueued #{gem_names.size} gems"
   end
 
+  desc 'queue loading on Tuesday'
+  task :queue_loading_tuesday => :environment do
+    Rake::Task['gems:queue_loading'].execute if Time.now.tuesday?
+  end
+
+  desc 'queue ranking on Thursday'
+  task :queue_ranking_thursday => :environment do
+    Rake::Task['gems:queue_ranking'].execute if Time.now.thursday?
+  end
+
   desc 'This task queues ranking of ALL gems in database'
   task :queue_ranking => :environment do |t, args|
-    gem_names = Neo4j::Session.query( 'Match(gem) Return gem.name' ).map { |result| result['gem.name'] }
+    gem_names = Neo4j::Session.query('Match(gem) Return gem.name').map { |result| result['gem.name'] }
     puts "queueing #{gem_names.size} for ranking..."
     gem_names.each { |gem_name| Resque.enqueue(Ranker, gem_name) }
   end

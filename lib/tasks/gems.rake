@@ -21,8 +21,8 @@ namespace :gems do
   end
 
   desc 'queue loading on Tuesday'
-  task :queue_loading_tuesday => :environment do
-    Rake::Task['gems:queue_loading'].execute if Time.now.tuesday?
+  task :queue_loading_tuesday, [:limit] => :environment do |_, args|
+    Rake::Task['gems:queue_loading'].execute(args) if Time.now.tuesday?
   end
 
   desc 'queue ranking on Thursday'

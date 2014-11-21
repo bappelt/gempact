@@ -1,0 +1,4 @@
+{"name": "activerecord-jdbc-adapter-onsite", "downloads": 5056, "version": "1.2.2", "version_downloads": 5056, "platform": "ruby", "authors": "Nick Sieger, Ola Bini and JRuby contributors", "info": "activerecord-jdbc-adapter is a database adapter for Rails\\' ActiveRecord\ncomponent that can be used with JRuby[http://www.jruby.org/]. It allows use of\nvirtually any JDBC-compliant database with your JRuby on Rails application.", "licenses": null, "project_uri": "http://rubygems.org/gems/activerecord-jdbc-adapter-onsite", "gem_uri": "http://rubygems.org/gems/activerecord-jdbc-adapter-onsite-1.2.2.gem", "homepage_uri": "https://github.com/jruby/activerecord-jdbc-adapter", "wiki_uri": null, "documentation_uri": null, "mailing_list_uri": null, "source_code_uri": null, "bug_tracker_uri": null, "dependencies": {
+    "development": [],
+    "runtime": []
+}}

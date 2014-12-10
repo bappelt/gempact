@@ -12,7 +12,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'rest-client'
 gem 'resque', '~> 1.22.0'
 
-gem 'neo4j'
+gem 'neo4j', :git => 'https://github.com/neo4jrb/neo4j', :ref => 'a05bcc05c6f072c89522f7595438475274f0aa0d'
+gem 'neo4j-core', :git => 'https://github.com/neo4jrb/neo4j-core', :ref => 'd727220e13cc6675cff125bf66f55b5fd5a944d1'
 gem 'mongoid', '~> 4.0.0'
 
 gem 'foundation-rails'

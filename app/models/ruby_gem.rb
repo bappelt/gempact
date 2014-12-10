@@ -15,13 +15,6 @@ class RubyGem
   has_many :out, :dependencies, model_class: RubyGem, type: 'depends_on'
   has_many :in, :dependents, model_class: RubyGem, type: 'depends_on'
 
-  before_save do
-    self.name = sanitize_string(name)
-    self.info = sanitize_string(info)
-    self.homepage_uri = sanitize_string(homepage_uri)
-    self.source_code_uri = sanitize_string(source_code_uri)
-  end
-
   MAX_SEARCH_DEPTH = 5
 
   def gempact_score
@@ -139,10 +132,6 @@ class RubyGem
     new_gem.create_dependencies_from_spec(gem_spec)
     new_gem.save!
     new_gem
-  end
-
-  def sanitize_string(str)
-    str.to_s.gsub( /([\+\-&\|!\(\)\{\}\[\]\^"~\*\?:\\])/ , "\\\\\\1" )
   end
 
 end

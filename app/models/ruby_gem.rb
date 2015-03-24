@@ -30,7 +30,7 @@ class RubyGem
   end
 
   def badge_url
-    "#{root_url}gems/#{name}/badge"
+    "#{root_path}gems/#{name}/badge"
   end
 
   def self.delete_all

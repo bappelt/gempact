@@ -4,6 +4,7 @@ class RubyGem
 
   property :name, index: :exact, constraint: :unique
   property :info
+  property :description
   property :homepage_uri
   property :source_code_uri
   property :created_at

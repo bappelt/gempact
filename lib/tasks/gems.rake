@@ -20,6 +20,12 @@ namespace :gems do
     puts "enqueued #{gem_names.size} gems"
   end
 
+  desc "queue a gem by name for loading"
+  task :queue_loading_single, [:name] => :environment do |t, args|
+    Resque.enqueue(Importer, args.name)
+    puts "Enqueued #{args.name}"
+  end
+
   desc 'queue loading on Tuesday'
   task :queue_loading_tuesday, [:limit] => :environment do |_, args|
     Rake::Task['gems:queue_loading'].execute(args) if Time.now.tuesday?

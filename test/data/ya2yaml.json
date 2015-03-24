@@ -1,1 +1,22 @@
-{"name":"ya2yaml","downloads":463505,"version":"0.31","version_downloads":296633,"platform":"ruby","authors":"Akira FUNAI","info":"Ya2YAML is \"yet another to_yaml\". It emits YAML document with complete UTF8 support (string/binary detection, \"\\u\" escape sequences and Unicode specific line breaks).\n","licenses":null,"project_uri":"http://rubygems.org/gems/ya2yaml","gem_uri":"http://rubygems.org/gems/ya2yaml-0.31.gem","homepage_uri":"http://rubyforge.org/projects/ya2yaml/","wiki_uri":"","documentation_uri":"","mailing_list_uri":"","source_code_uri":"http://github.com/afunai/ya2yaml","bug_tracker_uri":"","dependencies":{"development":[],"runtime":[]}}
+{
+  "name": "ya2yaml",
+  "downloads": 463505,
+  "version": "0.31",
+  "version_downloads": 296633,
+  "platform": "ruby",
+  "authors": "Akira FUNAI",
+  "info": "Ya2YAML is \"yet another to_yaml\". It emits YAML document with complete UTF8 support (string/binary detection, \"\\u\" escape sequences and Unicode specific line breaks).\n",
+  "licenses": null,
+  "project_uri": "http://rubygems.org/gems/ya2yaml",
+  "gem_uri": "http://rubygems.org/gems/ya2yaml-0.31.gem",
+  "homepage_uri": "http://rubyforge.org/projects/ya2yaml/",
+  "wiki_uri": "",
+  "documentation_uri": "",
+  "mailing_list_uri": "",
+  "source_code_uri": "http://github.com/afunai/ya2yaml",
+  "bug_tracker_uri": "",
+  "dependencies": {
+    "development": [],
+    "runtime": []
+  }
+}

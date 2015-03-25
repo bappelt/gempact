@@ -16,7 +16,7 @@ gem 'neo4j', '~>4.1.5'
 gem 'neo4j-core'
 gem 'mongoid', '~> 4.0.0'
 
-gem 'foundation-rails'
+gem 'foundation-rails', '5.4.5.0'
 
 gem 'zeroclipboard-rails'
 

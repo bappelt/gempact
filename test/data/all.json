@@ -1,0 +1,37 @@
+{
+  "name": "all",
+  "downloads": 607,
+  "version": "4.0.0",
+  "version_downloads": 163,
+  "platform": "ruby",
+  "authors": "Niko Dziemba",
+  "info": "This gems requires all other gems. Or at least a lot of them.",
+  "licenses": ["MIT"],
+  "sha": "c66ece151a1dbbc01aebd75d13e4601e0b4dd65a391736eff6666b7a9da9f24a",
+  "project_uri": "http://rubygems.org/gems/all",
+  "gem_uri": "http://rubygems.org/gems/all-4.0.0.gem",
+  "homepage_uri": "https://github.com/dziemba/all",
+  "wiki_uri": null,
+  "documentation_uri": null,
+  "mailing_list_uri": null,
+  "source_code_uri": null,
+  "bug_tracker_uri": null,
+  "dependencies": {
+    "development": [
+      {
+        "name": "bundler",
+        "requirements": "\u003e= 0"
+      },
+      {
+        "name": "rake",
+        "requirements": "\u003e= 0"
+      }
+    ],
+    "runtime": [
+      {
+        "name": "swissmatch-street\n",
+        "requirements": "\u003e= 0"
+      }
+    ]
+  }
+}

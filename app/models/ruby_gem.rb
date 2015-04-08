@@ -100,7 +100,7 @@ class RubyGem
 
   def create_dependencies_from_spec(gem_spec)
     dependencies = gem_spec['dependencies']['runtime']
-    dependency_gem_names = dependencies.collect { |gem| gem['name'] }
+    dependency_gem_names = dependencies.collect { |gem| gem['name'].strip }
     dependency_list = []
     dependency_gem_names.each do |dependency_name|
       dependency = RubyGem.find_or_create_by_name(dependency_name)

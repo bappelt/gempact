@@ -39,6 +39,13 @@ class RubyGemTest < ActiveSupport::TestCase
     assert_equal "Ya2YAML is \"yet another to_yaml\". It emits YAML document with complete UTF8 support (string/binary detection, \"\\u\" escape sequences and Unicode specific line breaks).\n", another.info
   end
 
+  def test_trailing_whitespace
+    stub_gemspec_request('all')
+    RubyGem.pull_spec_and_create('all')
+    gem = RubyGem.find_by(name: 'all')
+    assert_equal 'swissmatch-street', gem.dependencies[0].name
+  end
+
 
   def test_removed_dependency
     create_gem_with_dependencies('actionview', %w(activesupport builder erubis))

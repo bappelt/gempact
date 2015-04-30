@@ -18,6 +18,9 @@
       Gempact score: <strong class="score" data-tooltip title="As of: <%= @ruby_gem.ranked_at.to_s(:short) %>">
       <%= format_score @ruby_gem.gempact_score %>
     </strong>
+
+      <%= line_chart GemHistory.find_by(gem_name: @ruby_gem.name, year: 2014).total_dependent_counts.collect { |h| [h['timestamp'], h['count']] }
+       %>
     </div>
 
     <br/>

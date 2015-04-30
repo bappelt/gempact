@@ -20,6 +20,8 @@ gem 'foundation-rails', '5.4.5.0'
 
 gem 'zeroclipboard-rails'
 
+gem 'chartkick'
+
 group :development, :test do
   gem 'pry-byebug'
   gem 'webmock', require: false

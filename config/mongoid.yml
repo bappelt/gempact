@@ -82,8 +82,9 @@ production:
         # retry_interval specifies the number of seconds to wait before retrying a single operation.
         retry_interval: 1
 staging:
-   default:
-        uri: <%= ENV['MONGOLAB_URI'] %>
-        options:
-          max_retries: 30
-          retry_interval: 1
+  sessions:
+    default:
+      uri: <%= ENV['MONGOLAB_URI'] %>
+      options:
+        max_retries: 30
+        retry_interval: 1

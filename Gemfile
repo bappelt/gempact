@@ -23,6 +23,7 @@ gem 'zeroclipboard-rails'
 group :development, :test do
   gem 'pry-byebug'
   gem 'webmock', require: false
+  gem 'factory_girl_rails'
 end
 
 

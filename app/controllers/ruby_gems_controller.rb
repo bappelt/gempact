@@ -36,6 +36,7 @@ class RubyGemsController < ApplicationController
   private
 
   def load_ruby_gem
-    @ruby_gem = RubyGem.find_by!(name: params[:name])
+    @ruby_gem = RubyGem.find_by(name: params[:name])
+    redirect_to '/404'  if @ruby_gem.nil?
   end
 end

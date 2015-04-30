@@ -7,6 +7,9 @@ class RubyGemsController < ApplicationController
   end
 
   def show
+    histories = []
+    GemHistory.all(gem_name: @ruby_gem.name).each { |h| histories += h.total_dependent_counts }
+    @histories = histories.collect { |h| [ h['timestamp'], h['count']]}
   end
 
   def badge

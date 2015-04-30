@@ -10,10 +10,6 @@ if ENV["REDISCLOUD_URL"]
   Resque.redis = Redis.new host: uri.host, port: uri.port, password: uri.password
 end
 
-Resque::Failure::Honeybadger.configure do |config|
-  config.api_key = ENV['HONEYBADGER_API_KEY']
-end
-
 Resque::Failure::Multiple.classes = [Resque::Failure::Redis, Resque::Failure::Honeybadger]
 Resque::Failure.backend = Resque::Failure::Multiple
 

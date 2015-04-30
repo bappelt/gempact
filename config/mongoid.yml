@@ -81,3 +81,16 @@ production:
 
         # retry_interval specifies the number of seconds to wait before retrying a single operation.
         retry_interval: 1
+staging:
+  # Configure available database sessions. (required)
+  sessions:
+    # Defines the default session. (required)
+    default:
+      # Defines the name of the default database that Mongoid can connect to.
+      # (required).
+      database: gempact_development
+      # Provides the hosts the default session can connect to. Must be an array
+      # of host:port pairs. (required)
+      hosts:
+        - localhost:27017
+      options:

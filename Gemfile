@@ -35,4 +35,5 @@ group :production do
   gem 'rails_12factor'
   gem 'unicorn'
   gem 'honeybadger', '~> 2.0'
+  gem 'resque-honeybadger'
 end

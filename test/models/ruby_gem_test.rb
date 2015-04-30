@@ -39,6 +39,15 @@ class RubyGemTest < ActiveSupport::TestCase
     assert_equal "Ya2YAML is \"yet another to_yaml\". It emits YAML document with complete UTF8 support (string/binary detection, \"\\u\" escape sequences and Unicode specific line breaks).\n", another.info
   end
 
+  def test_null_dependency
+    gem_name = 'cloak'
+    stub_gemspec_request(gem_name)
+    RubyGem.pull_spec_and_create(gem_name)
+    gem = RubyGem.find_by(name: gem_name)
+    assert_not_nil gem
+    assert_equal 'cloak', gem.name
+  end
+
   def test_trailing_whitespace
     stub_gemspec_request('all')
     RubyGem.pull_spec_and_create('all')

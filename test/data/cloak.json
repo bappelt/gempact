@@ -1,0 +1,58 @@
+{
+  "name": "cloak",
+  "downloads": 1645,
+  "version": "0.0.1",
+  "version_downloads": 1641,
+  "platform": "ruby",
+  "authors": "Jason Lagaac",
+  "info": "Cloak is a simple encrypted password storage system which uses crypt",
+  "licenses": null,
+  "metadata": {},
+  "sha": "1f85bad182974c01563deac3bc1e59d01cfaf2eff56b9c917d63f33d098c8cdf",
+  "project_uri": "http://rubygems.org/gems/cloak",
+  "gem_uri": "http://rubygems.org/gems/cloak-0.0.1.gem",
+  "homepage_uri": "http://github.com/safetyscissors/cloak",
+  "wiki_uri": null,
+  "documentation_uri": null,
+  "mailing_list_uri": null,
+  "source_code_uri": null,
+  "bug_tracker_uri": null,
+  "dependencies": {
+    "development": [
+      {
+        "name": "bundler",
+        "requirements": "~\u003e 1.0.0"
+      },
+      {
+        "name": "jeweler",
+        "requirements": "~\u003e 1.6.4"
+      },
+      {
+        "name": "rcov",
+        "requirements": "\u003e= 0"
+      },
+      {
+        "name": "rspec",
+        "requirements": "\u003e= 2.3.0"
+      }
+    ],
+    "runtime": [
+      {
+        "name": "bcrypt-ruby",
+        "requirements": "\u003e= 3.0"
+      },
+      {
+        "name": "commander",
+        "requirements": "\u003e= 1.0"
+      },
+      {
+        "name": "highline",
+        "requirements": "\u003e= 1.0"
+      },
+      {
+        "name": null,
+        "requirements": "\u003e= 1.0"
+      }
+    ]
+  }
+}

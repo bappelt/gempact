@@ -10,7 +10,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'rest-client'
-gem 'resque', '~> 1.22.0'
+gem 'resque', '~> 1.25.2'
 
 gem 'neo4j', '~>4.1.5'
 gem 'neo4j-core'

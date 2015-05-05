@@ -10,7 +10,7 @@
 
     <div class="row">
       <div class="small-5">
-      <p><%= @ruby_gem.info %></p>
+        <p><%= @ruby_gem.info %></p>
       </div>
     </div>
 
@@ -44,9 +44,9 @@
             </thead>
             <tbody>
             <% @ruby_gem.dependencies.each do |dep| %>
-                <tr>
-                  <td><%= link_to(dep.name, ruby_gem_path(dep.name)) %></td>
-                </tr>
+              <tr>
+                <td><%= link_to(dep.name, ruby_gem_path(dep.name)) %></td>
+              </tr>
             <% end %>
             </tbody>
           </table>
@@ -78,9 +78,9 @@
             </thead>
             <tbody>
             <% 10.times do %>
-                <tr>
-                  <td style="height: 36px;"></td>
-                </tr>
+              <tr>
+                <td style="height: 36px;"></td>
+              </tr>
             <% end %>
             </tbody>
           </table>
@@ -112,9 +112,9 @@
             </thead>
             <tbody>
             <% 10.times do %>
-                <tr>
-                  <td style="height: 36px;"></td>
-                </tr>
+              <tr>
+                <td style="height: 36px;"></td>
+              </tr>
             <% end %>
             </tbody>
           </table>
@@ -131,8 +131,8 @@
 
       Is this your gem?
       <%= link_to "#{@ruby_gem.name}/badge_home" do %>
-          Get a badge like this one:
-          <img src="<%= @ruby_gem.badge_url %>"/>
+        Get a badge like this one:
+        <img src="<%= @ruby_gem.badge_url %>"/>
       <% end %>
     </div>
   </center>

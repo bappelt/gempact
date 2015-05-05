@@ -70,20 +70,7 @@
         </a>
 
         <div id="gem-dependents" class="content">
-          <table>
-            <thead>
-            <tr>
-              <th>Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% 10.times do %>
-              <tr>
-                <td style="height: 36px;"></td>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
+          <%= render 'dependent_gem_table' %>
         </div>
       </dd>
     </dl>
@@ -104,24 +91,10 @@
         </a>
 
         <div id="gem-dependents-transitive" class="content">
-          <table>
-            <thead>
-            <tr>
-              <th>Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% 10.times do %>
-              <tr>
-                <td style="height: 36px;"></td>
-              </tr>
-            <% end %>
-            </tbody>
-          </table>
+          <%= render 'dependent_gem_table' %>
         </div>
       </dd>
     </dl>
-
 
     <br/>
     <br/>

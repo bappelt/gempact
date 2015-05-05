@@ -34,9 +34,11 @@ class TransitiveDependentsDatatable < Datatable
                                        search: params[:search][:value],
                                        limit: per_page,
                                        offset: page_start)
-    .map do |result|
+      .map do |result|
       {
-        name: result.dependent.name
+        name: result.dependent.name,
+        direct_count: result.dependent.direct_dependents,
+        total_count: result.dependent.total_dependents
       }
     end
   end

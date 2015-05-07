@@ -33,12 +33,13 @@ class TransitiveDependentsDatatable < Datatable
     RubyGem.find_transitive_dependents(ruby_gem.name,
                                        search: params[:search][:value],
                                        limit: per_page,
-                                       offset: page_start)
+                                       offset: page_start,
+                                       order: "#{sort_column} #{sort_direction}")
       .map do |result|
       {
         name: result.dependent.name,
-        direct_count: result.dependent.direct_dependents,
-        total_count: result.dependent.total_dependents
+        direct_dependents: result.dependent.direct_dependents,
+        total_dependents: result.dependent.total_dependents
       }
     end
   end

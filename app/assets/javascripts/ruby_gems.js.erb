@@ -17,14 +17,15 @@
     $('.gems-home .score-table table').DataTable({
       serverSide: true,
       ajax: '/datatables/gems/ranked',
+      order: [[1, 'desc']],
       columns: [
         {
           data: 'name',
           render: nameRenderer
         },
         {
-          data: 'score',
-          render: scoreRenderer
+          data: 'total_dependents',
+          render: scoreRenderer,
         }
       ]
     });
@@ -40,11 +41,11 @@
           render: nameRenderer
         },
         {
-          data: 'direct_count',
+          data: 'direct_dependents',
           render: scoreRenderer
         },
         {
-          data: 'total_count',
+          data: 'total_dependents',
           render: scoreRenderer
         }
 
@@ -64,11 +65,11 @@
           render: nameRenderer
         },
         {
-          data: 'direct_count',
+          data: 'direct_dependents',
           render: scoreRenderer
         },
         {
-          data: 'total_count',
+          data: 'total_dependents',
           render: scoreRenderer
         }
       ]

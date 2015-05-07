@@ -29,13 +29,13 @@ class RankedDatatable < Datatable
   def data
     Neo4j::Session.query(
       %Q[ MATCH (gem:RubyGem) #{search_expr}
-          RETURN gem ORDER BY gem.total_dependents DESC
+          RETURN gem ORDER BY gem.#{sort_column} #{sort_direction}
           SKIP #{page_start} LIMIT #{per_page}
         ]
     ).map do |result|
       {
         name: result.gem.name,
-        score: number_with_delimiter(result.gem.total_dependents)
+        total_dependents: number_with_delimiter(result.gem.total_dependents)
       }
     end
   end

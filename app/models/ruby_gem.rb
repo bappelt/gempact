@@ -55,30 +55,35 @@ class RubyGem
         "AS total_count").first.total_count
   end
 
-  def self.find_dependents(ruby_gem, search: nil, offset: 0, limit: 100)
+  def self.find_dependents(ruby_gem, search: nil, offset: 0, limit: 100, order: nil)
     safe_offset = [offset.to_i, 0].max
     safe_limit = [limit.to_i, 100].min
 
     search_expr = search.blank? ? '' : "WHERE dependent.name =~ '.*#{search}.*' "
+    order_expr = order.blank? ? '' : "ORDER BY dependent.#{order}"
+
 
     Neo4j::Session.query(
       "MATCH (g:RubyGem { name: '#{ruby_gem}'}) " +
         "<-[:depends_on]-(dependent:RubyGem) " +
         "#{search_expr} RETURN DISTINCT(dependent) AS dependent " +
-        "SKIP #{safe_offset} LIMIT #{safe_limit}")
+        order_expr +
+        " SKIP #{safe_offset} LIMIT #{safe_limit}")
   end
 
-  def self.find_transitive_dependents(ruby_gem, search: nil, offset: 0, limit: 100)
+  def self.find_transitive_dependents(ruby_gem, search: nil, offset: 0, limit: 100, order: nil)
     safe_offset = [offset.to_i, 0].max
     safe_limit = [limit.to_i, 100].min
 
     search_expr = search.blank? ? '' : "WHERE dependent.name =~ '.*#{search}.*' "
+    order_expr = order.blank? ? '' : "ORDER BY dependent.#{order}"
 
     Neo4j::Session.query(
       "MATCH (g:RubyGem { name: '#{ruby_gem}' }) " +
         "<-[:depends_on*1..#{MAX_SEARCH_DEPTH}]-(dependent:RubyGem) " +
         "#{search_expr} RETURN DISTINCT(dependent) AS dependent " +
-        "SKIP #{safe_offset} LIMIT #{safe_limit}")
+         order_expr +
+        " SKIP #{safe_offset} LIMIT #{safe_limit}")
   end
 
   def save_dependent_counts(direct_count:, total_count:)

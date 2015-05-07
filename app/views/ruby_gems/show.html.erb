@@ -15,10 +15,8 @@
     </div>
 
     <div class="subheader score-description">
-      Gempact score: <strong class="score" data-tooltip title="As of: <%= @ruby_gem.ranked_at.to_s(:short) %>">
+      Gempact score:
       <%= format_score @ruby_gem.gempact_score %>
-    </strong>
-
       <%= line_chart @histories, {library: {title: 'Gempact Score over Time'}} %>
     </div>
 

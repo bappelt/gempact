@@ -8,6 +8,7 @@
     };
 
     var scoreRenderer = function (score) {
+      if(score===null) score = '?';
       return '<strong>' + score + '</score>';
     };
 

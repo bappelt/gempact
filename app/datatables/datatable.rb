@@ -19,12 +19,15 @@ class Datatable
   end
 
   def sort_direction
-    params[:order]['0'] && params[:order]['0'][:dir]
+    params[:order]['0'][:dir]
+  rescue NoMethodError
+    'desc'
   end
 
   def sort_column
-    return unless params[:order]['0']
     col_index = params[:order]['0'][:column]
     params[:columns][col_index.to_s][:data]
+  rescue NoMethodError
+    'total_dependents'
   end
 end

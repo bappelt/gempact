@@ -12,7 +12,6 @@
  *
  *= require_directory .
  *= require foundation_and_overrides
- *= require dataTables/dataTables.foundation
  *= require dataTables/dataTables.custom
  *= require_self
  */

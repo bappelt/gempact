@@ -8,7 +8,7 @@
     };
 
     var scoreRenderer = function (score) {
-      if(score===null) score = '?';
+      if (score === null) score = '?';
       return '<strong>' + score + '</score>';
     };
 
@@ -100,5 +100,20 @@
     $(document).ready(function () {
       var clip = new ZeroClipboard($(".cb-copy"));
     });
+
+    $.fn.dataTable.ext.errMode = function (e, settings, techNote, message) {
+      console.log("DataTables Error");
+      console.log(' message: ' + message);
+      console.log(' settings: ' + settings);
+      console.log(' technote: ' + techNote);
+      Honeybadger.notify(new Error('DataTables Error'), {
+        context: {
+          settings: settings,
+          techNote: techNote,
+          message: message
+        }
+      });
+    };
+
   });
 }());

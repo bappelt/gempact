@@ -43,6 +43,12 @@ namespace :gems do
     gem_names.each { |gem_name| Resque.enqueue(Ranker, gem_name) }
   end
 
+  desc "queue a gem by name for ranking"
+  task :queue_ranking_single, [:name] => :environment do |t, args|
+    Resque.enqueue(Ranker, args.name)
+    puts "Enqueued #{args.name} for ranking"
+  end
+
   desc 'This task checks for duplicate dependency listings'
   task :remove_dupes => :environment do
     puts 'removing duplicate dependencies'

@@ -16,3 +16,5 @@
 /tmp
 
 /db/neo4j
+*.log
+*.pid

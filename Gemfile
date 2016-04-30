@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.1.9'
+
+gem 'dotenv-rails', :groups => [:development]
 
 gem 'rails', '4.1.5'
 gem 'sass-rails', '~> 4.0.3'
@@ -26,8 +28,9 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'webmock', require: false
   gem 'factory_girl_rails'
+  gem 'capistrano', '~> 3.1'
+  gem 'capistrano-rails', '~> 1.1'
 end
-
 
 group :doc do
   gem 'sdoc', '~> 0.4.0'

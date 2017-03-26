@@ -1,0 +1,59 @@
+gempact-web:
+  container_name: gempact-web
+  build: .
+  environment:
+    RAILS_ENV: development
+    RESQUE_WEB_HTTP_BASIC_AUTH_PASSWORD: admin
+    RESQUE_WEB_HTTP_BASIC_AUTH_USER: admin
+    REDISCLOUD_URL: "redis://redis:6379"
+    GRAPHENEDB_URL: "http://neo4j:7474"
+  volumes:
+    - './:/usr/src/app'
+  ports:
+    - "3000:3000"
+  links:
+    - mongo
+    - redis
+    - neo4j
+  working_dir: /usr/src/app
+  command: bundle exec rails s -b 0.0.0.0
+
+gempact-import-worker:
+  container_name: gempact-import-worker
+  build: .
+  environment:
+    RAILS_ENV: development
+    REDISCLOUD_URL: "redis://redis:6379"
+    GRAPHENEDB_URL: "http://neo4j:7474"
+  volumes:
+    - './:/usr/src/app'
+  links:
+    - mongo
+    - redis
+    - neo4j
+  working_dir: /usr/src/app
+  command: bundle exec rake resque:work QUEUE=*
+
+mongo:
+  container_name: gempact-mongo
+  image: mongo
+
+redis:
+  container_name: gempact-redis
+  image: redis
+
+resque:
+  image: ennexa/resque-web
+  links:
+    - redis:redisserver
+  ports:
+    - "5678:5678"
+  command: "-r redis://redisserver:6379"
+
+neo4j:
+  container_name: gempact-neo4j
+  image: neo4j:2.3
+  ports:
+    - "7474:7474"
+  environment:
+    NEO4J_AUTH: "none"
